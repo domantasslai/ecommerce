@@ -1,0 +1,61 @@
+// Product Rating
+
+@charset "UTF-8";
+  :root {
+  --star-size: 60px;
+  --font-size: 30px;
+  /* --star-color: #fff;
+  --star-background: #fc0; */
+  --star-color: #d5d6d2;
+  --star-background: #212121;
+  }
+
+.Stars {
+  --percent: calc(var(--rating) / 5 * 100%);
+  display: inline-block;
+  font-size: var(--font-size);
+  font-family: Times;
+  line-height: normal;
+  }
+.Stars::before {
+  content: '★★★★★';
+  letter-spacing: 3px;
+  background: linear-gradient(90deg, var(--star-background) var(--percent), var(--star-color) var(--percent));
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.rate {
+    float: left;
+    padding: 0;
+}
+.rate:not(:checked) > input {
+    position:absolute;
+    top:-9999px;
+}
+.rate:not(:checked) > .rateLabel {
+    float:right;
+    width:1em;
+    overflow:hidden;
+    white-space:nowrap;
+    cursor:pointer;
+    font-size:30px;
+    color:#ccc;
+}
+.rate:not(:checked) > .rateLabel:before {
+    content: '★ ';
+}
+.rate > input:checked ~ .rateLabel {
+    color: #212121;
+}
+.rate:not(:checked) > .rateLabel:hover,
+.rate:not(:checked) > .rateLabel:hover ~ .rateLabel {
+    color: #212121;
+}
+.rate > input:checked + .rateLabel:hover,
+.rate > input:checked + .rateLabel:hover ~ .rateLabel,
+.rate > input:checked ~ .rateLabel:hover,
+.rate > input:checked ~ .rateLabel:hover ~ .rateLabel,
+.rate > .rateLabel:hover ~ .rateLabel:checked ~ .rateLabel {
+    color: #212121;
+}
