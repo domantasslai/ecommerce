@@ -3,7 +3,10 @@ use App\Extra\Tools;
 use Carbon\Carbon;
 
 
-function presentPrice($price){
+function presentPrice($price, $curreny_sign = false){
+  if ($curreny_sign) {
+    return number_format($price / 100, 2) . ' €';
+  }
   return number_format($price / 100, 2);
 }
 
@@ -13,6 +16,7 @@ function setActiveCategory($category, $output = 'active'){
 
 function productImage($path)
 {
+  // return $path;
   return $path && file_exists('storage/'.$path) ? Voyager::image($path) : asset('img/not-found.jpg');
 }
 
@@ -30,14 +34,22 @@ function getNumbers()
     $tax = config('cart.tax') / 100;
     $discount = session()->get('coupon')['discount'] ?? 0;
     $code = session()->get('coupon')['name'] ?? null;
+    $shipping = session()->get('shipping_price') ?? 0;
     $newSubtotal = (Cart::subtotal() - $discount);
     if ($newSubtotal < 0) {
         $newSubtotal = 0;
     }
-    $newTax = $newSubtotal * $tax;
-    $newTotal = $newSubtotal * (1 + $tax);
+
+    if ($shipping < 0) {
+      $shipping = 0;
+    }
+
+    // $newSubtotal = $newSubtotal + $shipping;
+    $newTax = ($newSubtotal + $shipping) * $tax;
+    $newTotal = ($newSubtotal + $shipping) * (1 + $tax);
 
     return collect([
+        'shipping' => $shipping,
         'tax' => $tax,
         'discount' => $discount,
         'code' => $code,

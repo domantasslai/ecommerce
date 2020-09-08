@@ -17,12 +17,13 @@ class CartController extends Controller
     public function index()
     {
         $mightAlsoLike = Product::mightAlsoLike()->get();
+        $shipping = getNumbers()->get('shipping');
         $tax = getNumbers()->get('tax');
         $discount = getNumbers()->get('discount');
         $newSubtotal = getNumbers()->get('newSubtotal');
         $newTax = getNumbers()->get('newTax');
         $newTotal = getNumbers()->get('newTotal');
-        return view('cart', compact('mightAlsoLike', 'discount', 'newSubtotal', 'newTax', 'newTotal'));
+        return view('cart', compact('mightAlsoLike', 'discount', 'newSubtotal', 'newTax', 'newTotal', 'shipping'));
     }
 
     /**
@@ -53,10 +54,27 @@ class CartController extends Controller
         Cart::add($request->id, $request->name, 1, $request->price)
             ->associate('App\Product');
 
+        if (!(session()->has('shipping_price'))) {
+           session()->put('shipping_price', 0);
+        }
+
       return redirect()->route('cart.index')->with('success_message', 'Item was added to your cart!');
     }
 
+    public function cartShipping(Request $request){
 
+      $validator = Validator::make($request->all(), [
+          'value' => 'required|string'
+      ]);
+
+      if ($request->value == 'no') {
+       $request->session()->put('shipping_price', 0);
+     } elseif($request->value == 'yes') {
+       $request->session()->put('shipping_price', 1400);
+      }
+      // return \json_encode($request->value);
+      return response()->json(['url'=> route('cart.index')]);
+   }
 
     /**
      * Display the specified resource.

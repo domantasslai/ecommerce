@@ -43,7 +43,7 @@
                 <div class="cart-table-row">
                     <div class="cart-table-row-left">
                         <a href="{{ route('shop.show', $item->model->slug) }}"><img src="{{ productImage($item->model->image) }}" alt="item" class="cart-table-img"></a>
-                        <div class="cart-item-details">
+                        <div class="cart-item-details pl-2">
                             <div class="cart-table-item"><a href="{{ route('shop.show', $item->model->slug) }}">{{ $item->model->name }}</a></div>
                             <div class="cart-table-description">{{ $item->model->details }}</div>
                             <div class="spacer"></div>
@@ -67,7 +67,7 @@
                                 @endfor
                             </select>
                         </div>
-                        <div>{{ presentPrice($item->subtotal) }}</div>
+                        <div>{{ presentPrice($item->subtotal, true) }}</div>
                         <div class="">
                           <form action="{{ route('cart.destroy', $item->rowId) }}" method="POST">
                               {{ csrf_field() }}
@@ -96,36 +96,63 @@
 
             <div class="cart-totals">
                 <div class="cart-totals-left">
-                    Shipping is free because we’re awesome like that. Also because that’s additional stuff I don’t feel like figuring out :).
+                    <h2 style="margin-bottom: 5px;"> Shipping: </h2>
+                    <form class="radioForm" id="radioForm">
+                       <div class="form-check">
+                           <label class="form-check-label">
+                               <input type="radio" class="form-check-input shipping" name="shipping" value="no" {{ (session()->get('shipping_price') == 0) ? 'checked' : '' }} >No shipping: {{ presentPrice(0, true) }}
+                           </label>
+                       </div>
+                       <div class="form-check">
+                           <label class="form-check-label">
+                               <input type="radio" class="form-check-input shipping" name="shipping" value="yes" {{ (session()->get('shipping_price') == 1400) ? 'checked' : '' }} >Shipping: +{{ presentPrice(1400, true) }}
+                           </label>
+                       </div>
+                   </form>
                 </div>
 
                 <div class="cart-totals-right">
                     <div>
-                        Subtotal <br>
-                        @if (session()->has('coupon'))
-                            <form action="{{ route('coupon.destroy') }}" method="POST" style="display:block">
-                                {{ csrf_field() }}
-                                {{ method_field('delete') }}
-                                Code ({{ session()->get('coupon')['name'] }})
-                                <button type="submit" class="remove" style="font-size:18px;"><i class="far fa-times-circle"></i></button>
-
-                            </form>
-                            <hr>
-                            New Subtotal <br>
+                      <span class="">Subtotal <br></span>
+                      <div class="my-2"></div>
+                      @if (session()->has('coupon'))
+                          <form action="{{ route('coupon.destroy') }}" method="POST" style="display:block">
+                              {{ csrf_field() }}
+                              {{ method_field('delete') }}
+                              <span>Code ({{ session()->get('coupon')['name'] }})</span>
+                              <button type="submit" class="remove" style="font-size:18px;"><i class="far fa-times-circle"></i></button>
+                          </form>
+                          <hr>
+                          <div class="my-2"></div>
+                          <span>New Subtotal <br></span>
                         @endif
-                        Tax ({{config('cart.tax')}}%)<br>
-                        <span class="cart-totals-total">Total</span>
+                        @if (session()->has('shipping_price') && session()->get('shipping_price') > 0)
+                          <div class="my-2"></div>
+                          <span>Shipping <br></span>
+                        @endif
+                        <div class="my-2"></div>
+                        <span>Tax ({{config('cart.tax')}}%)<br></span>
+                        <div class="my-2"></div>
+                        <span class="cart-totals-total py-3">Total</span>
                     </div>
                     <div class="cart-totals-subtotal">
-                        {{ presentPrice(Cart::subtotal()) }} <br>
+                        {{ presentPrice(Cart::subtotal(), true) }} <br>
+                        <div class="my-2"></div>
                         @if (session()->has('coupon'))
-                            -{{ presentPrice($discount) }} <br>
+                            -{{ presentPrice($discount, true) }} <br>
                             {{-- <br> --}}
                             <hr>
-                            {{ presentPrice($newSubtotal) }} <br>
+                            {{ presentPrice($newSubtotal, true) }} <br>
                         @endif
-                        {{ presentPrice($newTax) }} <br>
-                        <span class="cart-totals-total">{{ presentPrice($newTotal) }}</span>
+                        @if (session()->has('shipping_price') && session()->get('shipping_price') > 0)
+                            <div class="my-2"></div>
+                            {{ presentPrice($shipping, true) }}
+                            <br>
+                        @endif
+                        <div class="my-2"></div>
+                        {{ presentPrice($newTax, true) }} <br>
+                        <div class="my-2"></div>
+                        <span class="cart-totals-total">{{ presentPrice($newTotal, true) }}</span>
                     </div>
                 </div>
             </div> <!-- end cart-totals -->
@@ -152,29 +179,31 @@
                 @foreach (Cart::instance('saveForLater')->content() as $item)
                 <div class="cart-table-row">
                     <div class="cart-table-row-left">
-                        <a href="{{ route('shop.show', $item->model->slug) }}"><img src="{{ asset('img/products/'.$item->model->slug.'.jpg') }}" alt="item" class="cart-table-img"></a>
-                        <div class="cart-item-details">
+                        <a href="{{ route('shop.show', $item->model->slug) }}"><img src="{{ productImage($item->model->image) }}" alt="item" class="cart-table-img"></a>
+                        <div class="cart-item-details pl-2">
                             <div class="cart-table-item"><a href="{{ route('shop.show', $item->model->slug) }}">{{ $item->model->name }}</a></div>
                             <div class="cart-table-description">{{ $item->model->details }}</div>
+                            <div class="spacer"></div>
+                            <div class="cart-table-actions">
+                              <form action="{{ route('saveForLater.switchToCart', $item->rowId) }}" method="POST">
+                                  {{ csrf_field() }}
+
+                                  <button type="submit" class="cart-options">Move to Cart</button>
+                              </form>
+                            </div>
                         </div>
                     </div>
                     <div class="cart-table-row-right">
-                        <div class="cart-table-actions">
+                        <div>{{ $item->model->presentPrice() }}</div>
+                        <div>
                             <form action="{{ route('saveForLater.destroy', $item->rowId) }}" method="POST">
                                 {{ csrf_field() }}
                                 {{ method_field('DELETE') }}
 
                                 <button type="submit" class="remove" style="font-size:18px;"><i class="far fa-times-circle"></i></button>
                             </form>
-
-                            <form action="{{ route('saveForLater.switchToCart', $item->rowId) }}" method="POST">
-                                {{ csrf_field() }}
-
-                                <button type="submit" class="cart-options">Move to Cart</button>
-                            </form>
                         </div>
 
-                        <div>{{ $item->model->presentPrice() }}</div>
                     </div>
                 </div> <!-- end cart-table-row -->
                 @endforeach
@@ -219,6 +248,27 @@
                     });
                 })
             })
+
+            // Cia
+            var rad = document.querySelectorAll('.shipping');
+            var prev = null;
+
+            for (var i = 0; i < rad.length; i++) {
+              rad[i].addEventListener('change', function(){
+                if (this !== prev) {
+                  prev = this;
+                }
+                axios.post(`/cart-shipping`, {
+                        value: prev.value,
+                    })
+                .then(function(response) {
+                    window.location.href = '{{ route('cart.index') }}'
+                })
+                .catch(function(error) {
+                   window.location.href = '{{ route('cart.index') }}'
+                });
+              });
+            }
         })();
     </script>
     <!-- Include AlgoliaSearch JS Client and autocomplete.js library -->

@@ -25,6 +25,7 @@ Route::post('/cart', 'CartController@store')->name('cart.store');
 Route::patch('/cart/{product}', 'CartController@update')->name('cart.update');
 Route::delete('/cart/{product}', 'CartController@destroy')->name('cart.destroy');
 Route::post('/cart/switchToSaveForLater/{product}', 'CartController@switchToSaveForLater')->name('cart.switchToSaveForLater');
+Route::post('/cart-shipping', 'CartController@cartShipping')->name('cart.shipping');
 // END CART
 
 // SAVE FOR LATER
