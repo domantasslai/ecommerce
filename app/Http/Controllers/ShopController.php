@@ -48,16 +48,20 @@ class ShopController extends Controller
         $product = Product::where('slug', $slug)->withCount('comments')->firstOrFail();
         $product->load('comments');
         $ratings = $product->comments->map(function ($item) {
+            if ($item->rating) {
               return (int)$item->rating;
+            }
         })->sum();
 
+        $comments_count = $product->comments->pluck('rating')->filter()->count();
+
         if ($ratings > 0) {
-          $ratings = round($ratings / $product->comments_count, 1);
+          $ratings = round($ratings / $comments_count, 1);
         }
 
         $mightAlsoLike = Product::where('slug', '!=', $slug)->mightAlsoLike()->get();
         $stockLevel = getStockLevel($product->quantity);
-        return view('product', compact('product', 'mightAlsoLike', 'stockLevel', 'ratings'));
+        return view('product', compact('product', 'mightAlsoLike', 'stockLevel', 'ratings', 'comments_count'));
     }
 
     public function search(Request $request){

@@ -60,7 +60,7 @@
           <div class="product-section-subtitle">{{ $product->details }}</div>
           <div class="">{!! $stockLevel !!}</div>
           <div class="spacer"></div>
-          <div> <span class="Stars" style="--rating: {{ $ratings }}" aria-label="Rating of this product is 2.3 out of 5."></span>  {{ $product->comments_count }} reviews</div>
+          <div> <span class="Stars" style="--rating: {{ $ratings }}" aria-label="Rating of this product is 2.3 out of 5."></span>  {{ $comments_count }} reviews</div>
           &nbsp;
           <div class="athenaProductPage_hr"></div>
           &nbsp;

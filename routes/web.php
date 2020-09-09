@@ -57,3 +57,8 @@ Route::get('/home', 'HomeController@index')->name('home');
 
 Route::get('/search', 'ShopController@search')->name('search');
 Route::get('/search-algolia', 'ShopController@searchAlgolia')->name('search-algolia');
+
+// COMMENTS
+Route::post('comments', 'CommentController@store')->name('comments.store');
+// Route::put('comments/{comment}', 'CommentController@updateComment')->name('comments.update');
+// END COMMENTS
