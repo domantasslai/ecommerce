@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Product;
+use \TCG\Voyager\Models\Post;
 
 class LandingPageController extends Controller
 {
@@ -15,6 +16,9 @@ class LandingPageController extends Controller
     public function index()
     {
         $products = Product::where('featured', true)->take(8)->inRandomOrder()->get();
-        return view('landing-page', compact('products'));
+
+        $posts = Post::take(3)->inRandomOrder()->get();
+        // dd($posts);
+        return view('landing-page', compact('products', 'posts'));
     }
 }

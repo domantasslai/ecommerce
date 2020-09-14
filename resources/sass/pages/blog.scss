@@ -1,0 +1,21 @@
+.blog-section{
+
+    .blog-header{
+      display: flex;
+      justify-content: flex-end;
+
+    }
+
+    .blog-post #landing_photo{
+      width: 100%;
+    }
+
+    .blog-show-title{
+      text-align: center;
+    }
+
+    #myCarousel{
+      width: 80%;
+      margin: 0 auto;
+    }
+}

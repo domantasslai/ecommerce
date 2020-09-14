@@ -60,5 +60,9 @@ Route::get('/search-algolia', 'ShopController@searchAlgolia')->name('search-algo
 
 // COMMENTS
 Route::post('comments', 'CommentController@store')->name('comments.store');
-// Route::put('comments/{comment}', 'CommentController@updateComment')->name('comments.update');
 // END COMMENTS
+
+// BLOG
+Route::get('/blog', 'BlogController@index')->name('blog.index');
+Route::get('/blog/{post}', 'BlogController@show')->name('blog.show');
+// END BLOG
