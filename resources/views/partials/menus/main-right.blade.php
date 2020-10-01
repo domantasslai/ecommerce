@@ -1,8 +1,22 @@
 <ul>
     @guest
-
-    <li class=""><a href="{{ route('register') }}">Sign Up</a></li>
-    <li class=""><a href="{{ route('login') }}">Login</a></li>
+    {{-- <li><a href=""></a></li> --}}
+    <li>
+				<a data-toggle="dropdown" class="dropdown-toggle" data-toggle="dropdown"
+                    aria-haspopup="true"
+                    aria-expanded="false" href="#">Account</a>
+				<ul class="dropdown-menu form-wrapper">
+          <div class="container">
+            <li>
+                <a href="{{ route('register') }}">Sign Up</a>
+                <div class="or-seperator"><b>or</b></div>
+                <a href="{{ route('login') }}">Login</a>
+            </li>
+          </div>
+				</ul>
+			</li>
+    {{-- <li class=""><a href="{{ route('register') }}">Sign Up</a></li>
+    <li class=""><a href="{{ route('login') }}">Login</a></li> --}}
     @else
       <li>
           <a class="" href="#">My Account</a>

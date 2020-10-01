@@ -13,7 +13,7 @@
       <i class="fa fa-chevron-right breadcrumb-separator"></i>
       <a href="{{ route('shop.index') }}">Shop</a>
       <i class="fa fa-chevron-right breadcrumb-separator"></i>
-      <span>Macbook Pro</span>
+      <span>{{ $product->name }}</span>
     @endcomponent
 
     <div class="container">
@@ -33,7 +33,6 @@
         </div>
       @endif
     </div>
-
     <div class="product-section container">
     <div class="">
       <div class="product-section-image">
@@ -92,7 +91,7 @@
       </div>
     </div>
     @include('partials.might-like')
-
+  
 @endsection
 
 @section('extra-js')

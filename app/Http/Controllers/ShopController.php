@@ -23,7 +23,7 @@ class ShopController extends Controller
           });
           $categoryName = optional($categories->where('slug', request()->category)->first())->name;
         }else {
-          $products = Product::where('featured', true);
+          $products = Product::with('onSale')->where('featured', true);
           $categoryName = 'Featured';
         }
 
@@ -46,7 +46,7 @@ class ShopController extends Controller
     public function show($slug)
     {
         $product = Product::where('slug', $slug)->withCount('comments')->firstOrFail();
-        $product->load('comments');
+        $product->load('comments', 'onSale');
         $ratings = $product->comments->map(function ($item) {
             if ($item->rating) {
               return (int)$item->rating;
@@ -61,7 +61,8 @@ class ShopController extends Controller
 
         $mightAlsoLike = Product::where('slug', '!=', $slug)->mightAlsoLike()->get();
         $stockLevel = getStockLevel($product->quantity);
-        return view('product', compact('product', 'mightAlsoLike', 'stockLevel', 'ratings', 'comments_count'));
+        $categories = Category::all();
+        return view('product', compact('product', 'mightAlsoLike', 'stockLevel', 'ratings', 'comments_count', 'categories'));
     }
 
     public function search(Request $request){
@@ -80,5 +81,14 @@ class ShopController extends Controller
     public function searchAlgolia(Request $request){
 
       return view('search-results-algolia');
+    }
+
+    public function mostBuyable(){
+      $mostBuyable = Product::leftJoin('order_product','products.id','=','order_product.product_id')
+               ->selectRaw('products.*, COALESCE(sum(order_product.quantity),0) total')
+               ->groupBy('products.id')
+               ->orderBy('total','desc')
+               ->take(10)
+               ->get();
     }
 }

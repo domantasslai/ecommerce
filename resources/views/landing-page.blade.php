@@ -12,51 +12,92 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
         <!-- Styles -->
+        <link rel="stylesheet" href="{{ asset('css/algolia.css') }}">
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
         <link rel="stylesheet" href="{{ asset('css/responsive.css') }}">
-
+        <style media="screen">
+        .dropdown-toggle::after {
+          content: none;
+        }
+        </style>
     </head>
     <body>
         <header class="with-background">
             <div class="top-nav container">
                 <div class="top-nav-left">
-                    <div class="logo">Ecommerce</div>
-                    {{ menu('main', 'partials.menus.main') }}
+                    <div class="logo">
+                      <a href="/"><img src="{{ asset('img/logo_dk_transperant.png') }}" alt=""></a>
+                    </div>
+                    {{-- {{ menu('main', 'partials.menus.main') }} --}}
                 </div>
                 <div class="top-nav-right">
                   @include('partials.menus.main-right')
                 </div>
             </div> <!-- end top-nav -->
-
+            <div class="nav-background">
+              <div class="botom-nav container">
+                @foreach ($categories as $key => $category)
+                  <a href="{{ route('shop.index', ['category' => $category->slug]) }}">{{ $category->name }}</a>
+                @endforeach
+                {{ menu('main', 'partials.menus.main') }}
+              </div>
+            </div>
             <div class="hero container">
                 <div class="hero-copy">
-                    <h1>CSS Grid Example</h1>
-                    <p>A practical example of using CSS Grid for a typical website layout.</p>
+                    <h1>Use code: $$$</h1>
+                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Numquam, velit.</p>
 
-                    {{-- {{ menu('main') }} --}}
                     <div class="hero-buttons">
-                        <a href="#" class="button button-white">Button 1</a>
-                        <a href="#" class="button button-white">Button 2</a>
+                        <a href="{{ route('shop.index') }}" class="button">Shop now</a>
                     </div>
                 </div> <!-- end hero-copy -->
 
                 <div class="hero-image">
-                    <img src="img/macbook-pro-laravel.png" alt="hero image">
+                    <img src="{{ asset('img/products/CL550-removebg-preview.png') }}" alt="hero image">
                 </div>
             </div> <!-- end hero -->
         </header>
 
         <div class="featured-section">
             <div class="container">
-                <h1 class="text-center">CSS Grid Example</h1>
+                <h1 class="text-center">Our products</h1>
 
                 <p class="section-description text-center">Lorem ipsum dolor sit amet, consectetur adipisicing elit. A aliquid earum fugiat debitis nam, illum vero, maiores odio exercitationem quaerat. Impedit iure fugit veritatis cumque quo provident doloremque est itaque.</p>
 
-                <div class="text-center button-container">
-                    <a href="#" class="button">Featured</a>
-                    <a href="#" class="button">On Sale</a>
+                <div class="spacer"></div>
+                <h2 class="text-center">Shop by category</h2>
+                <div class="spacer"></div>
+                <div class="row categories text-center">
+                  @foreach ($categories as $key => $category)
+                    <div class="category col-lg-4">
+                      <a href="#">
+                        <img class="category_img" src="{{ Voyager::image($category->image) }}" alt="">
+                        <div class="text-center category_name">
+                          {{ $category->name }}
+                        </div>
+                        <div class="text-center mb-5">
+                          {{ $category->text }}
+                        </div>
+                      </a>
+                    </div>
+                  @endforeach
                 </div>
+                <h2 class="text-center">Top sellers</h2>
+                <div class="spacer"></div>
 
+                <div class="products text-center">
+                  @foreach ($mostBuyableProducts as $product)
+                    <div class="product">
+                      <a href="{{ route('shop.show', $product->slug) }}"><img src="{{ Voyager::image($product->image) }}" alt="product"></a>
+                      <a href="{{ route('shop.show', $product->slug) }}"><div class="product-name">{{ $product->name }}</div></a>
+                      <div class="product-price">{{ $product->presentPrice() }}</div>
+                    </div>
+                  @endforeach
+                </div> <!-- end products -->
+
+                <div class="spacer"></div>
+                <h2 class="text-center">On sale</h2>
+                <div class="spacer"></div>
 
                 <div class="products text-center">
                   @foreach ($products as $product)
@@ -86,4 +127,15 @@
         </footer>
 
     </body>
+
+    <script src="{{ asset('js/app.js') }}"></script>
+    <!-- Include AlgoliaSearch JS Client and autocomplete.js library -->
+    <script src="https://cdn.jsdelivr.net/algoliasearch/3/algoliasearch.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/autocomplete.js/0/autocomplete.min.js"></script>
+    <script src="{{ asset('js/algolia.js') }}"></script>
+    <script type="text/javascript">
+        $(document).on("click", ".navbar-right .dropdown-menu", function(e){
+          e.stopPropagation();
+        });
+    </script>
 </html>

@@ -2,6 +2,7 @@
 
 namespace App;
 
+use App\onSale;
 use Laravelista\Comments\Comment;
 use Illuminate\Database\Eloquent\Model;
 use Nicolaslopezj\Searchable\SearchableTrait;
@@ -67,5 +68,9 @@ class Product extends Model
         ];
 
         return array_merge($array, $extraFields);
+    }
+
+    public function onSale(){
+      return $this->hasMany(onSale::class, 'product_id');
     }
 }

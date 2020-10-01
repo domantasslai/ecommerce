@@ -11617,9 +11617,9 @@ img {
 }
 
 body {
-  font-family: "Roboto", Arial, sans-serif;
+  font-family: Biotif, "Noto Sans, Noto Sans JP, Noto Sans KR", Helvetica;
   font-size: 18px;
-  font-weight: 300;
+  font-weight: 200;
   line-height: 1.6;
 }
 
@@ -11627,7 +11627,7 @@ h1,
 h2,
 .product-section-subtitle,
 .product-section-price {
-  font-family: "Montserrat", Arial, sans-serif;
+  font-family: Biotif, "Noto Sans, Noto Sans JP, Noto Sans KR", Helvetica;
   font-weight: bold;
 }
 
@@ -11710,13 +11710,14 @@ strong {
 }
 
 .button {
-  border: 1px solid #212121;
+  border: 1px solid #3b6978;
   padding: 12px 40px;
+  color: #3b6978;
 }
 
 .button:hover {
   color: #e9e9e9;
-  background: #212121;
+  background: #3b6978;
 }
 
 .button-white {
@@ -11745,7 +11746,7 @@ strong {
 }
 
 .button-plain {
-  border: 1px solid #212121 !important;
+  border: 1px solid #3b6978 !important;
   background: transparent;
 }
 
@@ -12327,15 +12328,15 @@ form button[type=submit] {
 }
 
 header.with-background {
-  background: url("/img/triangles.svg");
-  background-size: cover;
-  color: #e9e9e9;
+  background: #F5F5F5;
+  color: #212121;
+  border-bottom: 1px solid #CDCDCD;
 }
 
 header.with-background .top-nav {
   display: flex;
   justify-content: space-between;
-  padding: 40px 0;
+  padding: 20px 0;
   letter-spacing: 1.5px;
 }
 
@@ -12345,19 +12346,20 @@ header.with-background .top-nav .logo {
 }
 
 header.with-background .top-nav ul a {
-  color: #e9e9e9;
+  color: #212121;
 }
 
 header.with-background .top-nav ul a:hover {
-  color: #d0d0d0;
+  color: #3b3b3b;
 }
 
 header.with-background .hero {
   display: grid;
   grid-template-columns: 1fr 1fr;
   grid-gap: 30px;
-  padding-top: 20px;
+  padding-top: 50px;
   padding-bottom: 84px;
+  text-align: center;
 }
 
 header.with-background .hero .hero-image {
@@ -12365,7 +12367,7 @@ header.with-background .hero .hero-image {
 }
 
 header.with-background .hero h1 {
-  font-size: 52px;
+  font-size: 30px;
   margin-top: 50px;
 }
 
@@ -12378,20 +12380,22 @@ header.with-background .hero .button {
 }
 
 header {
-  background: #535353;
+  background: #F5F5F5;
+  color: #212121;
+  border-bottom: 1px solid #CDCDCD;
 }
 
 header .top-nav {
   display: flex;
   justify-content: space-between;
-  padding: 30px 0;
+  padding: 20px 0;
   letter-spacing: 1.5px;
 }
 
 header .top-nav .logo {
   font-weight: bold;
   font-size: 28px;
-  color: #e9e9e9;
+  color: #212121;
   margin-right: 58px;
 }
 
@@ -12411,7 +12415,7 @@ header .top-nav ul li:last-child {
 }
 
 header .top-nav ul a {
-  color: #e9e9e9;
+  color: #212121;
 }
 
 header .top-nav ul a:hover {
@@ -12420,8 +12424,8 @@ header .top-nav ul a:hover {
 
 header .top-nav ul .cart-count {
   display: inline-block;
-  background: #FFD94D;
-  color: #212121;
+  background: #4d4f53;
+  color: #e9e9e9;
   line-height: 0;
   border-radius: 50%;
   font-size: 14px;
@@ -12435,13 +12439,36 @@ header .top-nav ul .cart-count span {
   margin-right: 6px;
 }
 
-header .top-nav-left {
-  display: flex;
-}
-
-header .top-nav-right {
+header .top-nav-right,
+header .top-nav-left,
+header .botom-nav {
   display: flex;
   align-items: center;
+}
+
+header .nav-background {
+  background: #3b6978;
+  height: 40px;
+}
+
+header .nav-background .botom-nav {
+  justify-content: space-between;
+  width: 100%;
+}
+
+header .nav-background .botom-nav .active {
+  background: #f2f2f2;
+  color: #212121;
+}
+
+header .nav-background .botom-nav a {
+  color: #e9e9e9;
+  padding: 6px;
+  font-weight: 400;
+}
+
+header .nav-background .botom-nav.container {
+  padding: 0;
 }
 
 footer {
@@ -12510,9 +12537,20 @@ footer {
   grid-area: blog3;
 }
 
+.categories .category a {
+  text-decoration: none;
+}
+
+.categories .category a .category_name {
+  font-weight: bold;
+}
+
+.category_img {
+  height: 200px;
+  width: 80%;
+}
+
 .products-section {
-  display: grid;
-  grid-template-columns: 1fr 3fr;
   margin: 80px auto 80px;
 }
 

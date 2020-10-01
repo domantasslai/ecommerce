@@ -1,10 +1,7 @@
 <header>
   <div class="top-nav container">
     <div class="top-nav-left">
-        <div class="logo"><a href="/">Ecommerce</a></div>
-        @if (! (request()->is('checkout') || request()->is('guest-checkout')))
-        {{ menu('main', 'partials.menus.main') }}
-        @endif
+        <div class="logo"><a href="/"><img src="{{ asset('img/logo_dk_transperant.png') }}" alt=""></a></div>
     </div>
     <div class="top-nav-right">
         @if (! (request()->is('checkout') || request()->is('guest-checkout')))
@@ -12,4 +9,12 @@
         @endif
     </div>
   </div> <!-- end top-nav -->
+  <div class="nav-background">
+    <div class="botom-nav container">
+      @foreach ($categories as $key => $category)
+        <a href="{{ route('shop.index', ['category' => $category->slug]) }}" class="{{ setActiveCategory($category->slug) }}">{{ $category->name }}</a>
+      @endforeach
+      {{ menu('main', 'partials.menus.main') }}
+    </div>
+  </div>
 </header>
