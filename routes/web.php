@@ -38,6 +38,11 @@ Route::post('/coupon', 'CouponsController@store')->name('coupon.store');
 Route::delete('/coupon', 'CouponsController@destroy')->name('coupon.destroy');
 // END COUPONS
 
+// ADDRESS
+Route::get('/address_info', 'AddressController@index')->name('address.index');
+Route::post('/address_info', 'AddressController@store')->name('address.store');
+// END ADDRESS
+
 // CHECKOUT
 Route::get('/checkout', 'CheckoutController@index')->name('checkout.index')->middleware(['auth', 'verified']);
 Route::post('/checkout', 'CheckoutController@store')->name('checkout.store');

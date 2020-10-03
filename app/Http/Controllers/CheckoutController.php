@@ -37,21 +37,6 @@ class CheckoutController extends Controller
         $newTotal = getNumbers()->get('newTotal');
         // dd(presentPrice($newTotal));
 
-        // sukuriam
-        // session()->put('user', collect([
-        //   'name' => 'Domantas',
-        //   'iso' => 'LT'
-        // ]));
-        //
-        // // dd(session()->get('user'));
-        //
-        // // pushinam i egzistuojanti session
-        // session()->push('user', collect([
-        //   // 'name' => 'Domantas',
-        //   'iso' => 'RU'
-        // ]));
-
-
         return view('checkout', compact('discount', 'newSubtotal', 'newTax', 'newTotal'));
     }
 
@@ -104,7 +89,8 @@ class CheckoutController extends Controller
           $this->decreaseQuantities();
           Cart::instance('default')->destroy();
           session()->forget('coupon');
-
+          session()->forget('userAddress');
+          
           return redirect(route('confirmation.index'))->with('success_message', 'Thank you! Your payment has been successfully accepted!');
         }catch(CardErrorException $e){
           $this->addToOrdersTables($request, $e->getMessage());

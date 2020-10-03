@@ -1,7 +1,7 @@
 <ul>
     @guest
     {{-- <li><a href=""></a></li> --}}
-    <li>
+    {{-- <li>
 				<a data-toggle="dropdown" class="dropdown-toggle" data-toggle="dropdown"
                     aria-haspopup="true"
                     aria-expanded="false" href="#">Account</a>
@@ -14,7 +14,23 @@
             </li>
           </div>
 				</ul>
-			</li>
+			</li> --}}
+      {{-- <ul class="navbar-nav mr-right"> --}}
+          <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              My Account
+              </a>
+              <div class="dropdown-menu p-3">
+                  <a href="#">Login</a>
+                  <a href="#">Register</a>
+              </div>
+          </li>
+          {{-- <li class="nav-item">
+              <a class="nav-link dropdown-toggle" href="http://example.com" id="navbarDropdownMenuLink" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+              Register
+              </a>
+          </li> --}}
+      {{-- </ul> --}}
     {{-- <li class=""><a href="{{ route('register') }}">Sign Up</a></li>
     <li class=""><a href="{{ route('login') }}">Login</a></li> --}}
     @else

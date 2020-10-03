@@ -23,7 +23,8 @@ class CartController extends Controller
         $newSubtotal = getNumbers()->get('newSubtotal');
         $newTax = getNumbers()->get('newTax');
         $newTotal = getNumbers()->get('newTotal');
-        return view('cart', compact('mightAlsoLike', 'discount', 'newSubtotal', 'newTax', 'newTotal', 'shipping'));
+        // session()->forget('userAddress');
+        return view('cart', compact('mightAlsoLike', 'discount', 'newSubtotal', 'newTax', 'newTotal', 'shipping', 'tax'));
     }
 
     /**

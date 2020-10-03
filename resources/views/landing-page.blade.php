@@ -35,10 +35,7 @@
                 </div>
             </div> <!-- end top-nav -->
             <div class="nav-background">
-              <div class="botom-nav container">
-                @foreach ($categories as $key => $category)
-                  <a href="{{ route('shop.index', ['category' => $category->slug]) }}">{{ $category->name }}</a>
-                @endforeach
+              <div class="bottom-nav container">
                 {{ menu('main', 'partials.menus.main') }}
               </div>
             </div>

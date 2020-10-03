@@ -70,7 +70,7 @@
                 <h5 class="card-title">Authentication required</h5>
                 <p class="card-text">You must log in to post a comment.</p>
                 <div class="spacer"></div>
-                <a href="{{ route('login') }}" class="auth-button-hollow" style="">Log in</a>
+                <a href="{{ route('login') }}" class="button button-plain" style="">Log in</a>
                 <div class="spacer"></div>
             </div>
         </div>

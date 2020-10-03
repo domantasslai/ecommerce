@@ -118,6 +118,16 @@
         display: flex;
         justify-content: space-between;
         margin-bottom: 40px;
+
+        .button-checkout{
+          background-color: $blue-color;
+          color: $white;
+          text-decoration: none;
+
+          &:hover{
+            background-color: lighten($blue-color, 5%);
+          }
+        }
     }
 
     .have-code {

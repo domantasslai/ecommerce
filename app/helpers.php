@@ -31,7 +31,10 @@ function getTaxRate($country, $vat_number){
 
 function getNumbers()
 {
-    $tax = config('cart.tax') / 100;
+    $countryIso = session()->get('userAddress')['country'] ?? 'LT';
+
+    $tax = (int)(Tools::getTaxRate(session()->get('userAddress')['country'] ?? null, ''));
+
     $discount = session()->get('coupon')['discount'] ?? 0;
     $code = session()->get('coupon')['name'] ?? null;
     $shipping = session()->get('shipping_price') ?? 0;
@@ -45,8 +48,8 @@ function getNumbers()
     }
 
     // $newSubtotal = $newSubtotal + $shipping;
-    $newTax = ($newSubtotal + $shipping) * $tax;
-    $newTotal = ($newSubtotal + $shipping) * (1 + $tax);
+    $newTax = ($newSubtotal + $shipping) * ($tax / 100);
+    $newTotal = ($newSubtotal + $shipping) + $newTax;
 
     return collect([
         'shipping' => $shipping,
