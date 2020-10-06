@@ -26,6 +26,10 @@ class CheckoutController extends Controller
           return redirect()->route('shop.index');
         }
 
+        if(session('userAddress') == null){
+          return redirect()->route('address.index')->withErrors('Please fill up address information');
+        }
+
         if (auth()->user() && request()->is('guest-checkout')) {
           return redirect()->route('checkout.index');
         }
@@ -35,7 +39,6 @@ class CheckoutController extends Controller
         $newSubtotal = getNumbers()->get('newSubtotal');
         $newTax = getNumbers()->get('newTax');
         $newTotal = getNumbers()->get('newTotal');
-        // dd(presentPrice($newTotal));
 
         return view('checkout', compact('discount', 'newSubtotal', 'newTax', 'newTotal'));
     }
@@ -50,6 +53,32 @@ class CheckoutController extends Controller
         //
     }
 
+    /*
+      * Show formated Order
+    */
+    public function show()
+    {
+      if (Cart::instance('default')->count() == 0) {
+        return redirect()->route('shop.index');
+      }
+
+      if(session('userAddress') == null){
+        return redirect()->route('address.index')->withErrors('Please fill up address information');
+      }
+
+      if (auth()->user() && request()->is('guest-checkout')) {
+        return redirect()->route('checkout.index');
+      }
+
+      $shipping = getNumbers()->get('shipping');
+      $tax = getNumbers()->get('tax');
+      $discount = getNumbers()->get('discount');
+      $newSubtotal = getNumbers()->get('newSubtotal');
+      $newTax = getNumbers()->get('newTax');
+      $newTotal = getNumbers()->get('newTotal');
+      return view('checkout.show', compact('discount', 'newSubtotal', 'newTax', 'newTotal', 'shipping', 'tax'));
+    }
+
     /**
      * Store a newly created resource in storage.
      *
@@ -58,6 +87,10 @@ class CheckoutController extends Controller
      */
     public function store(CheckoutRequest $request)
     {
+        if(session('userAddress') == null){
+          return redirect()->route('address.index')->withErrors('Please fill up address information');
+        }
+
         // Check race condition when there are less items available to purchase
         if ($this->productsAreNoLongerAvailable()) {
             return back()->withErrors('Sorry! One of the items in your cart is no longer available.');
@@ -90,7 +123,7 @@ class CheckoutController extends Controller
           Cart::instance('default')->destroy();
           session()->forget('coupon');
           session()->forget('userAddress');
-          
+
           return redirect(route('confirmation.index'))->with('success_message', 'Thank you! Your payment has been successfully accepted!');
         }catch(CardErrorException $e){
           $this->addToOrdersTables($request, $e->getMessage());

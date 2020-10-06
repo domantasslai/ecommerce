@@ -1,6 +1,6 @@
 @extends('layout')
 
-@section('title', 'Checkout')
+@section('title', 'Fill address information')
 
 @section('extra-css')
     <style>
@@ -42,63 +42,168 @@
                     <h2>Billing Details</h2>
 
                     <div class="form-group">
-                        <label for="email">Email Address</label>
+                        <label for="billing_email">Email Address</label>
                         @if (auth()->user())
-                            <input type="email" class="form-control" id="email" name="email" value="{{ auth()->user()->email }}" readonly>
+                            <input type="email" class="form-control" id="billing_email" name="billing_email" value="{{ auth()->user()->email }}" readonly>
                         @else
-                            <input type="email" class="form-control" id="email" name="email" value="{{ old('email', $email) }}" required>
+                            <input type="email" class="form-control" id="billing_email" name="billing_email" value="{{ old('billing_email', $billing_email) }}" required>
                         @endif
-                    </div>
-                    <div class="form-group">
-                        <label for="name">Name</label>
-                        <input type="text" class="form-control" id="name" name="name" value="{{ old('name', $name) }}" required>
-                    </div>
-                    <div class="form-group">
-                        <label for="address">Address</label>
-                        <input type="text" class="form-control" id="address" name="address" value="{{ old('address', $address) }}" required>
                     </div>
                     <div class="half-form">
                       <div class="form-group">
-                        <label for="country">Country</label>
-                        <select id="country" class="selectpicker show-tick" data-show-subtext="true" data-live-search="true" name="country" data-width="100%">
+                        <label for="billing_firstName">First name</label>
+                        <input type="text" class="form-control" id="billing_billing_firstName" name="billing_firstName" value="{{ old('billing_firstName', $billing_firstName) }}" required>
+                      </div>
+                      <div class="form-group">
+                        <label for="billing_lastName">Last name</label>
+                        <input type="text" class="form-control" id="billing_lastName" name="billing_lastName" value="{{ old('billing_lastName', $billing_lastName) }}" required>
+                      </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="billing_address">Address</label>
+                        <input type="text" class="form-control" id="billing_address" name="billing_address" value="{{ old('billing_address', $billing_address) }}" required>
+                    </div>
+                    <div class="half-form">
+                      <div class="form-group">
+                        <label for="billing_country">Country</label>
+                        <select id="billing_country" class="selectpicker show-tick" data-show-subtext="true" data-style="country-select" data-live-search="true" name="billing_country" data-width="100%">
+                            <option value="">Choose</option>
                             @foreach ($countries as $key => $country)
-                                <option value="{{ $country->iso }}" {{ $countryIso == $country->iso ? "selected" : "" }}>{{ $country->name }}</option>
+                                <option value="{{ $country->iso }}"
+                                  {{ $billing_countryIso == $country->iso ? "selected" : "" }}
+                                  >{{ $country->nicename }}</option>
                             @endforeach
                           </select>
                       </div>
                         <div class="form-group">
-                            <label for="city">City</label>
-                            <input type="text" class="form-control" id="city" name="city" value="{{ old('city', $city) }}" required>
+                            <label for="billing_city">City</label>
+                            <input type="text" class="form-control" id="billing_city" name="billing_city" value="{{ old('billing_city', $billing_city) }}" required>
                         </div>
                         <div class="form-group">
-                            <label for="province">Province</label>
-                            <input type="text" class="form-control" id="province" name="province" value="{{ old('province', $province) }}" required>
+                            <label for="billing_province">Province</label>
+                            <input type="text" class="form-control" id="billing_province" name="billing_province" value="{{ old('billing_province', $billing_province) }}" required>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="billing_postalcode">Postal Code</label>
+                            <input type="text" class="form-control" id="billing_postalcode" name="billing_postalcode" value="{{ old('billing_postalcode', $billing_postalcode) }}" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="billing_phone">Phone</label>
+                            <input type="text" class="form-control" id="billing_phone" name="billing_phone" value="{{ old('billing_phone', $billing_phone) }}" required>
                         </div>
                     </div> <!-- end half-form -->
+                    <div class="form-check">
+                      <input class="form-check-input" type="checkbox" name="address_different" onclick="showMe('delivery_container')" {{ old('address_different') == '1' ? 'checked' : '' }} value="1">
+                      <label class="form-check-label" for="">Your Delivery Address is different?</label>
+                    </div>
+                    <div class="spacer"></div>
 
-                    <div class="half-form">
+                    <div id="delivery_container" style="display: {{ old('address_different') == '1' ? 'block' : 'none' ?? 'none' }}">
+                      <h2>Delivery Details</h2>
+
+                      <div class="form-group">
+                          <label for="delivery_email">Email Address</label>
+                          @if (auth()->user())
+                              <input type="email" class="form-control" id="delivery_email" name="delivery_email" value="{{ auth()->user()->email }}">
+                          @else
+                              <input type="email" class="form-control" id="delivery_email" name="delivery_email" value="{{ old('delivery_email', $delivery_email) }}">
+                          @endif
+                      </div>
+                      <div class="half-form">
                         <div class="form-group">
-                            <label for="postalcode">Postal Code</label>
-                            <input type="text" class="form-control" id="postalcode" name="postalcode" value="{{ old('postalcode', $postalcode) }}" required>
+                          <label for="delivery_firstName">First name</label>
+                          <input type="text" class="form-control" id="delivery_delivery_firstName" name="delivery_firstName" value="{{ old('delivery_firstName', $delivery_firstName) }}">
                         </div>
                         <div class="form-group">
-                            <label for="phone">Phone</label>
-                            <input type="text" class="form-control" id="phone" name="phone" value="{{ old('phone', $phone) }}" required>
+                          <label for="delivery_lastName">Last name</label>
+                          <input type="text" class="form-control" id="delivery_lastName" name="delivery_lastName" value="{{ old('delivery_lastName', $delivery_lastName) }}">
                         </div>
-                    </div> <!-- end half-form -->
+                      </div>
+                      <div class="form-group">
+                          <label for="delivery_address">Address</label>
+                          <input type="text" class="form-control" id="delivery_address" name="delivery_address" value="{{ old('delivery_address', $delivery_address) }}">
+                      </div>
+                      <div class="half-form">
+                        <div class="form-group">
+                          <label for="delivery_country">Country</label>
+                          <select id="delivery_country" class="selectpicker show-tick" data-show-subtext="true" data-style="country-select" data-live-search="true" name="delivery_country" data-width="100%">
+                              <option value="">Choose</option>
+                              @foreach ($countries as $key => $country)
+                                  <option value="{{ $country->iso }}"
+                                    {{ $delivery_countryIso == $country->iso ? "selected" : "" }}
+                                    >{{ $country->nicename }}</option>
+                              @endforeach
+                            </select>
+                        </div>
+                          <div class="form-group">
+                              <label for="delivery_city">City</label>
+                              <input type="text" class="form-control" id="delivery_city" name="delivery_city" value="{{ old('delivery_city', $delivery_city) }}">
+                          </div>
+                          <div class="form-group">
+                              <label for="delivery_province">Province</label>
+                              <input type="text" class="form-control" id="delivery_province" name="delivery_province" value="{{ old('delivery_province', $delivery_province) }}">
+                          </div>
 
+                          <div class="form-group">
+                              <label for="delivery_postalcode">Postal Code</label>
+                              <input type="text" class="form-control" id="delivery_postalcode" name="delivery_postalcode" value="{{ old('delivery_postalcode', $delivery_postalcode) }}">
+                          </div>
+                          <div class="form-group">
+                              <label for="delivery_phone">Phone</label>
+                              <input type="text" class="form-control" id="delivery_phone" name="delivery_phone" value="{{ old('delivery_phone', $delivery_phone) }}">
+                          </div>
+                      </div> <!-- end half-form -->
+                    </div>
+
+                    <div class="spacer"></div>
+                    <h1 class="address-heading stylish-heading">Choose payment</h1>
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="paymentType" id="stripe" value="stripe" {{ ($paymentType == 'stripe') ? 'checked' : '' }}>
+                      <label class="form-check-label" for="stripe">
+                        Visa/Mastescard <i style="font-size:8px;">(+3% to total price)</i>
+                      </label>
+                    </div>
+
+                    <div class="form-check">
+                      <input class="form-check-input" type="radio" name="paymentType" id="paypal" value="paypal" {{ ($paymentType == 'paypal') ? 'checked' : '' }}>
+                      <label class="form-check-label" for="paypal">
+                        Paypal <i style="font-size:8px;">(+ 5% to total price)</i>
+                      </label>
+                    </div>
                     <div class="spacer"></div>
 
 
                     <div class="spacer"></div>
 
-                    <button type="submit" id="complete-order" class="button-primary full-width">Complete Order</button>
+                    <button type="submit" id="" class="button button-checkout full-width">Preview Order</button>
 
 
                 </form>
             </div>
 
-        </div> <!-- end checkout-section -->
+        </div> <!-- end address-section -->
     </div>
 
+@endsection
+
+@section('extra-js')
+  <script>
+    // (function(){
+      function showMe(box) {
+          var chboxs = document.getElementsByName("address_different");
+          var none = "none";
+          for(var i=0;i<chboxs.length;i++) {
+              if(chboxs[i].checked){
+               none = "block";
+                  break;
+              }
+          }
+
+          // alert(document.getElementById(box));
+          document.getElementById(box).style.display = none;
+
+      }
+    // })();
+  </script>
 @endsection

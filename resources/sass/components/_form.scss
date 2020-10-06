@@ -1,8 +1,8 @@
 form {
   .half-form {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
-    grid-gap: 30px;
+    grid-template-columns: repeat(2, 1fr);
+    grid-column-gap: 30px;
   }
 
   button[type="submit"] {
@@ -15,7 +15,7 @@ form {
 
 .form-group {
 
- margin-bottom: 20px;
+ margin-bottom: 15px;
 
   label {
     display: block;
@@ -25,5 +25,11 @@ form {
     width: 100%;
     padding: 12px;
     font-size: 16px;
+  }
+
+  .country-select{
+    background: #fff;
+    color: #495057;
+    border: 1px solid #ced4da;
   }
 }

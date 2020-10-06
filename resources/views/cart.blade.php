@@ -100,7 +100,7 @@
                     <form class="radioForm" id="radioForm">
                        <div class="form-check">
                            <label class="form-check-label">
-                               <input type="radio" class="form-check-input shipping" name="shipping" value="no" {{ (session()->get('shipping_price') == 0) ? 'checked' : '' }} >No shipping: {{ presentPrice(0, true) }}
+                               <input type="radio" class="form-check-input shipping" name="shipping" value="no" {{ (session()->get('shipping_price') == 0) ? 'checked' : '' }} >Pick up at the store: {{ presentPrice(0, true) }}
                            </label>
                        </div>
                        <div class="form-check">
@@ -119,7 +119,7 @@
                           <form action="{{ route('coupon.destroy') }}" method="POST" style="display:block">
                               {{ csrf_field() }}
                               {{ method_field('delete') }}
-                              <span>Code ({{ session()->get('coupon')['name'] }})</span>
+                              <span>Discount ({{ session()->get('coupon')['name'] }})</span>
                               <button type="submit" class="remove" style="font-size:18px;"><i class="far fa-times-circle"></i></button>
                           </form>
                           <hr>

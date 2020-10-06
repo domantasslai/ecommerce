@@ -1,0 +1,108 @@
+h1.preview-order-heading {
+  margin-top: 40px;
+}
+
+.preview-order-section {
+  display: grid;
+  grid-template-columns: 1fr;
+  // grid-column-gap: 10px;
+  grid-gap: 30px;
+  margin: 40px auto 80px;
+  width: 80%;
+
+  h2 {
+    margin-bottom: 28px;
+  }
+
+  .preview-order-table-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    border-top: 1px solid $text-color-light;
+    padding: 14px 0;
+
+    &:last-child {
+      border-bottom: 1px solid $text-color-light;
+    }
+
+    .preview-order-table-row-left, .preview-order-table-row-right {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .preview-order-table-row-left {
+      width: 50%;
+    }
+
+    .preview-order-table-row-right {
+      // width: 24%;
+      // padding-top: 10px;
+    }
+
+    .preview-order-table-img {
+      max-height: 60px;
+    }
+
+    .preview-order-table-description {
+      color: $text-color-light;
+    }
+
+    .preview-order-table-price {
+      padding-top: 6px;
+    }
+
+    .preview-order-table-quantity {
+      border: 1px solid $text-color-light;
+      padding: 4px 12px;
+      margin-right: 5px;
+    }
+  }
+
+  .preview-order-totals {
+    display: flex;
+    justify-content: space-between;
+    border-bottom: 1px solid $text-color-light;
+    padding: 18px 0;
+    line-height: 2;
+
+    .preview-order-totals-right {
+      text-align: right;
+    }
+
+    .preview-order-totals-total {
+      font-weight: bold;
+      font-size: 22px;
+      line-height: 2.2;
+    }
+  }
+}
+
+
+
+/**
+* The CSS shown here will not be introduced in the Quickstart guide, but shows
+* how you can use CSS to style your Element's container.
+*/
+.StripeElement {
+  background-color: white;
+  padding: 16px 16px;
+  border: 1px solid #ccc;
+
+}
+
+.StripeElement--focus {
+  // box-shadow: 0 1px 3px 0 #cfd7df;
+}
+
+.StripeElement--invalid {
+  border-color: #fa755a;
+}
+
+.StripeElement--webkit-autofill {
+  background-color: #fefde5 !important;
+}
+
+#card-errors {
+  color: #fa755a;
+}
