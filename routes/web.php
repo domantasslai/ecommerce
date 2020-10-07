@@ -48,6 +48,7 @@ Route::post('/address_info', 'AddressController@store')->name('address.store');
 Route::get('/checkout', 'CheckoutController@index')->name('checkout.index')->middleware(['auth', 'verified']);
 Route::get('/order-preview', 'CheckoutController@show')->name('checkout.show');
 Route::post('/checkout', 'CheckoutController@store')->name('checkout.store');
+Route::post('/paypal-checkout', 'CheckoutController@paypalCheckout')->name('checkout.paypal');
 
 Route::get('/guest-checkout', 'CheckoutController@index')->name('guestCheckout.index');
 

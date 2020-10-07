@@ -15,13 +15,17 @@ class AddressController extends Controller
       $countries = Country::all();
 
       if (Auth::check()) {
-        $email = auth()->user()->email;
+        $billing_email = auth()->user()->email;
+        $delivery_email = '';
       }elseif(session('userAddress')) {
-        $email = session('userAddress')['email'];
+        $billing_email = session('userAddress')['billing_email'];
+        $delivery_email = '';
       }else {
-        $email = '';
+        $billing_email = '';
+        $delivery_email = '';
       }
 
+      $billing_email = (session('userAddress')) ? session('userAddress')['billing_email'] : null;
       $billing_firstName = (session('userAddress')) ? session('userAddress')['billing_firstName'] : null;
       $billing_lastName = (session('userAddress')) ? session('userAddress')['billing_lastName'] : null;
       $billing_address = (session('userAddress')) ? session('userAddress')['billing_address'] : null;
@@ -31,6 +35,7 @@ class AddressController extends Controller
       $billing_postalcode = (session('userAddress')) ? session('userAddress')['billing_postalcode'] : null;
       $billing_phone = (session('userAddress')) ? session('userAddress')['billing_phone'] : null;
 
+      $delivery_email = (session('userAddress')) ? session('userAddress')['delivery_email'] : null;
       $delivery_firstName = (session('userAddress')) ? session('userAddress')['delivery_firstName'] : null;
       $delivery_lastName = (session('userAddress')) ? session('userAddress')['delivery_lastName'] : null;
       $delivery_address = (session('userAddress')) ? session('userAddress')['delivery_address'] : null;
@@ -43,8 +48,8 @@ class AddressController extends Controller
       $paymentType = (session('userAddress')) ? session('userAddress')['paymentType'] : null;
 
       return view('address', compact(
-        'countries', 'email', 'billing_firstName', 'billing_lastName', 'billing_address', 'billing_countryIso', 'billing_city', 'billing_province', 'billing_postalcode', 'billing_phone', 'paymentType',
-        'delivery_firstName', 'delivery_lastName', 'delivery_address', 'delivery_countryIso', 'delivery_city', 'delivery_province', 'delivery_postalcode', 'delivery_phone'
+        'countries', 'billing_email', 'billing_firstName', 'billing_lastName', 'billing_address', 'billing_countryIso', 'billing_city', 'billing_province', 'billing_postalcode', 'billing_phone', 'paymentType',
+        'delivery_email', 'delivery_firstName', 'delivery_lastName', 'delivery_address', 'delivery_countryIso', 'delivery_city', 'delivery_province', 'delivery_postalcode', 'delivery_phone'
         ));
     }
 

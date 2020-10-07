@@ -13231,6 +13231,16 @@ h1.preview-order-heading {
   line-height: 2.2;
 }
 
+.preview-order-section #payment-form {
+  width: 50%;
+  margin-left: 25%;
+}
+
+.preview-order-section #paypal-payment-form {
+  width: 50%;
+  margin-left: 25%;
+}
+
 /**
 * The CSS shown here will not be introduced in the Quickstart guide, but shows
 * how you can use CSS to style your Element's container.
