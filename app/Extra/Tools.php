@@ -2,19 +2,19 @@
 
 namespace App\Extra;
 
-use Illuminate\Database\Eloquent\Model;
 use App\Country;
 
 use SoapClient;
 use SoapFault;
 
 use DB;
-class Tools extends Model
+class Tools
 {
 
   public static function getTaxRate($country, $vat_number){
 
     if ($country == null) {
+      // $country  = 'LT';
       return ;
     }
     $vat_number = preg_replace('/[^0-9]/', '', $vat_number);

@@ -204,10 +204,10 @@
 
       var options = {
         name: document.getElementById('name_on_card').value,
-        address_line1: document.getElementById('address').value,
-        address_city: document.getElementById('city').value,
-        address_state: document.getElementById('province').value,
-        address_zip: document.getElementById('postalcode').value
+        address_line1: "{{ session('userAddress')['billing_address'] }}",
+        address_city: "{{ session('userAddress')['billing_city'] }}",
+        address_state: "{{ session('userAddress')['billing_province'] }}",
+        address_zip: "{{ session('userAddress')['billing_postalcode'] }}"
       }
 
 

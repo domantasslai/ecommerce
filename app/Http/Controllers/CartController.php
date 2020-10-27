@@ -18,24 +18,12 @@ class CartController extends Controller
     {
         $mightAlsoLike = Product::mightAlsoLike()->get();
         $shipping = getNumbers()->get('shipping');
-        $tax = getNumbers()->get('tax');
         $discount = getNumbers()->get('discount');
         $newSubtotal = getNumbers()->get('newSubtotal');
-        $newTax = getNumbers()->get('newTax');
-        $newTotal = getNumbers()->get('newTotal');
 
-        return view('cart', compact('mightAlsoLike', 'discount', 'newSubtotal', 'newTax', 'newTotal', 'shipping', 'tax'));
+        return view('cart', compact('mightAlsoLike', 'discount', 'newSubtotal', 'shipping'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
 
     /**
      * Store a newly created resource in storage.
@@ -73,31 +61,9 @@ class CartController extends Controller
      } elseif($request->value == 'yes') {
        $request->session()->put('shipping_price', 1400);
       }
-      // return \json_encode($request->value);
+
       return response()->json(['url'=> route('cart.index')]);
    }
-
-    /**
-     * Display the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function show($id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     *
-     * @param  int  $id
-     * @return \Illuminate\Http\Response
-     */
-    public function edit($id)
-    {
-        //
-    }
 
     /**
      * Update the specified resource in storage.
@@ -135,7 +101,6 @@ class CartController extends Controller
      */
     public function destroy($id)
     {
-      // dd('hit');
         Cart::remove($id);
 
         return back()->with('success_message', 'Item has been removed!');
@@ -150,7 +115,6 @@ class CartController extends Controller
     public function switchToSaveForLater($id)
     {
         $item = Cart::get($id);
-
         Cart::remove($id);
 
         $duplicates = Cart::instance('saveForLater')->search(function ($cartItem, $rowId) use ($id) {
@@ -158,7 +122,9 @@ class CartController extends Controller
         });
 
         if ($duplicates->isNotEmpty()) {
-            return redirect()->route('cart.index')->with('success_message', 'Item is already Saved For Later!');
+          Cart::instance('default')->add($item->id, $item->name, $item->qty, $item->price)
+              ->associate('App\Product');
+            return redirect()->route('cart.index')->withErrors('Item is already Saved For Later!');
         }
 
         Cart::instance('saveForLater')->add($item->id, $item->name, 1, $item->price)

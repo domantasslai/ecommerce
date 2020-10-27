@@ -67,7 +67,7 @@
                 <div class="row categories text-center">
                   @foreach ($categories as $key => $category)
                     <div class="category col-lg-4">
-                      <a href="#">
+                      <a href="{{ route('shop.index', ['category' => $category->slug]) }}">
                         <img class="category_img" src="{{ Voyager::image($category->image) }}" alt="">
                         <div class="text-center category_name">
                           {{ $category->name }}

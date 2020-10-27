@@ -54,7 +54,7 @@
         <div class="products text-center">
             @forelse ($products as $product)
               <div class="product">
-                  <a href="{{ route('shop.show', $product->slug) }}"><img src="{{ Voyager::image($product->image) }}" alt="product"></a>
+                  <a href="{{ route('shop.show', $product->slug) }}"><img src="{{ productImage($product->image) }}" alt="product"></a>
                   <a href="{{ route('shop.show', $product->slug) }}">
                       <div class="product-name">{{ $product->name }}</div>
                   </a>

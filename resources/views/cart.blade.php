@@ -112,48 +112,33 @@
                 </div>
 
                 <div class="cart-totals-right">
-                    <div>
-                      <span class="">Subtotal <br></span>
-                      <div class="my-2"></div>
+                  <table style="width: 100%;">
+                    <tbody>
+                      @if (session()->has('shipping_price') && session()->get('shipping_price') > 0)
+                      <tr>
+                        <td align="left">Shipping</td>
+                        <td>{{ presentPrice($shipping, true) }}</td>
+                      </tr>
+                      @endif
                       @if (session()->has('coupon'))
+                      <tr>
+                        <td align="left">
                           <form action="{{ route('coupon.destroy') }}" method="POST" style="display:block">
-                              {{ csrf_field() }}
-                              {{ method_field('delete') }}
-                              <span>Discount ({{ session()->get('coupon')['name'] }})</span>
-                              <button type="submit" class="remove" style="font-size:18px;"><i class="far fa-times-circle"></i></button>
+                            {{ csrf_field() }}
+                            {{ method_field('delete') }}
+                            <span>Discount ({{ session()->get('coupon')['name'] }})</span>
+                            <button type="submit" class="remove" style="font-size:18px;"><i class="far fa-times-circle"></i></button>
                           </form>
-                          <hr>
-                          <div class="my-2"></div>
-                          <span>New Subtotal <br></span>
-                        @endif
-                        @if (session()->has('shipping_price') && session()->get('shipping_price') > 0)
-                          <div class="my-2"></div>
-                          <span>Shipping <br></span>
-                        @endif
-                        <div class="my-2"></div>
-                        <span>Tax ({{ $tax }}%)<br></span>
-                        <div class="my-2"></div>
-                        <span class="cart-totals-total py-3">Total</span>
-                    </div>
-                    <div class="cart-totals-subtotal">
-                        {{ presentPrice(Cart::subtotal(), true) }} <br>
-                        <div class="my-2"></div>
-                        @if (session()->has('coupon'))
-                            -{{ presentPrice($discount, true) }} <br>
-                            {{-- <br> --}}
-                            <hr>
-                            {{ presentPrice($newSubtotal, true) }} <br>
-                        @endif
-                        @if (session()->has('shipping_price') && session()->get('shipping_price') > 0)
-                            <div class="my-2"></div>
-                            {{ presentPrice($shipping, true) }}
-                            <br>
-                        @endif
-                        <div class="my-2"></div>
-                        {{ presentPrice($newTax, true) }} <br>
-                        <div class="my-2"></div>
-                        <span class="cart-totals-total">{{ presentPrice($newTotal, true) }}</span>
-                    </div>
+                        </td>
+                        <td>-{{ presentPrice($discount, true) }}</td>
+                      </tr>
+                      @endif
+                      <tr>
+                        <td align="left">Subtotal</td>
+                        <td>{{ presentPrice($newSubtotal, true) }} <br></td>
+                      </tr>
+                    </tbody>
+                  </table>
                 </div>
             </div> <!-- end cart-totals -->
 
@@ -188,7 +173,7 @@
                               <form action="{{ route('saveForLater.switchToCart', $item->rowId) }}" method="POST">
                                   {{ csrf_field() }}
 
-                                  <button type="submit" class="cart-options">Move to Cart</button>
+                                  <button type="submit" class="cart-options">Move to Cart <i class="fas fa-cart-plus"></i></button>
                               </form>
                             </div>
                         </div>
@@ -249,7 +234,7 @@
                 })
             })
 
-            // Cia
+            // Add shippinh
             var rad = document.querySelectorAll('.shipping');
             var prev = null;
 

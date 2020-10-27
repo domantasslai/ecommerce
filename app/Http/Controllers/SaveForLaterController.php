@@ -39,7 +39,9 @@ class SaveForLaterController extends Controller
       });
 
       if ($duplicates->isNotEmpty()) {
-          return redirect()->route('cart.index')->with('success_message', 'Item is already in your Cart!');
+        Cart::instance('saveForLater')->add($item->id, $item->name, $item->qty, $item->price)
+            ->associate('App\Product');
+          return redirect()->route('cart.index')->withErrors('Item is already in your Cart!');
       }
 
       Cart::instance('default')->add($item->id, $item->name, 1, $item->price)

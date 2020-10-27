@@ -4,7 +4,7 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class AddImageToProductsTable extends Migration
+class AddShippingPriceToOrdersTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,8 +13,9 @@ class AddImageToProductsTable extends Migration
      */
     public function up()
     {
-        Schema::table('products', function (Blueprint $table) {
-            $table->string('image')->nullable()->after('featured');
+        Schema::table('orders', function (Blueprint $table) {
+          $table->integer('shipping_price')->default(0)->after('total');
+          $table->integer('payment_gateway_fee')->default(0)->after('shipping_price');
         });
     }
 
@@ -25,8 +26,8 @@ class AddImageToProductsTable extends Migration
      */
     public function down()
     {
-        Schema::table('products', function (Blueprint $table) {
-          $table->dropColumn('image');
+        Schema::table('orders', function (Blueprint $table) {
+            //
         });
     }
 }

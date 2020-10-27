@@ -43,16 +43,6 @@ class CheckoutController extends Controller
         return view('checkout', compact('discount', 'newSubtotal', 'newTax', 'newTotal'));
     }
 
-    /**
-     * Show the form for creating a new resource.
-     *
-     * @return \Illuminate\Http\Response
-     */
-    public function create()
-    {
-        //
-    }
-
     /*
       * Show formated Order
     */
@@ -77,12 +67,12 @@ class CheckoutController extends Controller
       $newTax = getNumbers()->get('newTax');
       $newTotal = getNumbers()->get('newTotal');
 
-    try {
-        $gateway = config('braintree');
-        $paypalToken = $gateway->ClientToken()->generate();
-    } catch (\Exception $e) {
-        $paypalToken = null;
-    }
+      try {
+          $gateway = config('braintree');
+          $paypalToken = $gateway->ClientToken()->generate();
+      } catch (\Exception $e) {
+          $paypalToken = null;
+      }
 
       return view('checkout.show', compact('discount', 'newSubtotal', 'newTax', 'newTotal', 'shipping', 'tax', 'paypalToken'));
     }
@@ -93,7 +83,7 @@ class CheckoutController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(CheckoutRequest $request)
+    public function store(Request $request)
     {
         if(session('userAddress') == null){
           return redirect()->route('address.index')->withErrors('Please fill up address information');
@@ -123,7 +113,7 @@ class CheckoutController extends Controller
           ]);
 
            // SUCCESSFUL
-          $order = $this->addToOrdersTables($request, null);
+          $order = $this->addToOrdersTables(session('userAddress'), null);
           Mail::send(new OrderPlaced($order));
 
           // decrease the quantities of all the products in the cart
@@ -141,6 +131,10 @@ class CheckoutController extends Controller
 
     public function paypalCheckout(Request $request)
     {
+        if(session('userAddress') == null){
+          return redirect()->route('address.index')->withErrors('Please fill up address information');
+        }
+
         // Check race condition when there are less items available to purchase
         if ($this->productsAreNoLongerAvailable()) {
             return back()->withErrors('Sorry! One of the items in your cart is no longer avialble.');
@@ -179,6 +173,7 @@ class CheckoutController extends Controller
 
             Cart::instance('default')->destroy();
             session()->forget('coupon');
+            session()->forget('userAddress');
 
             return redirect()->route('confirmation.index')->with('success_message', 'Thank you! Your payment has been successfully accepted!');
         } else {
@@ -192,25 +187,65 @@ class CheckoutController extends Controller
         }
     }
 
-    protected function addToOrdersTables($request, $error)
+    protected function addToOrdersTables($session, $error)
     {
         // Insert into orders table
         $order = Order::create([
             'user_id' => auth()->user() ? auth()->user()->id : null,
-            'billing_email' => $request->email,
-            'billing_name' => $request->name,
-            'billing_address' => $request->address,
-            'billing_city' => $request->city,
-            'billing_province' => $request->province,
-            'billing_postalcode' => $request->postalcode,
-            'billing_phone' => $request->phone,
-            'billing_name_on_card' => $request->name_on_card,
-            'billing_discount' => getNumbers()->get('discount'),
-            'billing_discount_code' => getNumbers()->get('code'),
-            'billing_subtotal' => getNumbers()->get('newSubtotal'),
-            'billing_tax' => getNumbers()->get('newTax'),
-            'billing_total' => getNumbers()->get('newTotal'),
+            // Billing address
+            'billing_email' => $session['billing_email'],
+            'billing_firstName' => $session['billing_firstName'],
+            'billing_lastName' => $session['billing_lastName'],
+            'billing_address' => $session['billing_address'],
+            'billing_country' => $session['billing_country'],
+            'billing_city' => $session['billing_city'],
+            'billing_province' => $session['billing_province'],
+            'billing_postalcode' => $session['billing_postalcode'],
+            'billing_phone' => $session['billing_phone'],
+            // Delivery address
+            'delivery_email' => $session['delivery_email'],
+            'delivery_firstName' => $session['delivery_firstName'],
+            'delivery_lastName' => $session['delivery_lastName'],
+            'delivery_country' => $session['delivery_country'],
+            'delivery_address' => $session['delivery_address'],
+            'delivery_city' => $session['delivery_city'],
+            'delivery_province' => $session['delivery_province'],
+            'delivery_postalcode' => $session['delivery_postalcode'],
+            'delivery_phone' => $session['delivery_phone'],
+            'discount' => getNumbers()->get('discount'),
+            'discount_code' => getNumbers()->get('code'),
+            'subtotal' => getNumbers()->get('newSubtotal'),
+            'tax' => getNumbers()->get('newTax'),
+            'total' => getNumbers()->get('newTotal'),
             'error' => $error,
+        ]);
+
+        // Insert into order_product table
+        foreach (Cart::content() as $item) {
+            OrderProduct::create([
+                'order_id' => $order->id,
+                'product_id' => $item->model->id,
+                'quantity' => $item->qty,
+            ]);
+        }
+
+        return $order;
+    }
+
+    protected function addToOrdersTablesPaypal($email, $name, $error)
+    {
+        // Insert into orders table
+        $order = Order::create([
+            'user_id' => auth()->user() ? auth()->user()->id : null,
+            'billing_email' => $email,
+            'billing_firstName' => $name,
+            'discount' => getNumbers()->get('discount'),
+            'discount_code' => getNumbers()->get('code'),
+            'subtotal' => getNumbers()->get('newSubtotal'),
+            'tax' => getNumbers()->get('newTax'),
+            'total' => getNumbers()->get('newTotal'),
+            'error' => $error,
+            'payment_gateway' => 'paypal',
         ]);
 
         // Insert into order_product table
