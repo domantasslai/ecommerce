@@ -13,6 +13,27 @@
 @endsection
 
 @section('content')
+    <div class="container">
+      <div class="steps row">
+        <div class="line"></div>
+        <div class="step">
+          <a href="{{ route('cart.index') }}">
+            <div class="circle complete">1</div>
+            <div class="label">Cart</div>
+          </a>
+        </div><!-- end "step" -->
+        <div class="step">
+          <a href="{{ route('address.index') }}">
+            <div class="circle complete">2</div>
+            <div class="label">Order<span class="responsive_hide"> Information</span></div>
+          </a>
+        </div><!-- end "step" -->
+        <div class="step">
+          <div class="circle active">3</div>
+          <div class="label">Preview<span class="responsive_hide"> and Pay</span></div>
+        </div><!-- end "step" -->
+      </div><!-- end "steps" -->
+    </div>
     <div class="container preview-order-container">
 
         @if (session()->has('success_message'))
@@ -34,7 +55,7 @@
         @endif
 
 
-        <h1 class="preview-order-heading stylish-heading">Preview Order and Pay</h1>
+        <h1 class="preview-order-heading stylish-heading">Preview and Pay</h1>
         <div class="preview-order-section">
 
             <div class="preview-order-table-container">
@@ -43,7 +64,7 @@
                     @foreach  (Cart::content() as $item)
                       <div class="preview-order-table-row">
                         <div class="preview-order-table-row-left">
-                          <img src="{{ Voyager::image($item->model->image) }}" alt="item" class="preview-order-table-img">
+                          <img src="{{ productImage($item->model->image) }}" alt="item" class="preview-order-table-img">
                           <div class="preview-order-item-details">
                             <div class="preview-order-table-item">{{ $item->model->name }}</div>
                             <div class="preview-order-table-description">{{ $item->model->details }}</div>
@@ -62,34 +83,36 @@
                 <div class="preview-order-totals">
                   <div class="preview-order-totals-left">
                     Subtotal <br>
+                    @if (session()->has('shipping_price') && session()->get('shipping_price') > 0)
+                      <div class="my-2"></div>
+                      <span>Shipping <br></span>
+                    @endif
                     @if (session()->has('coupon'))
                         Discount ({{ session()->get('coupon')['name'] }}) :
                         <br>
                         <hr>
                         New Subtotal <br>
                     @endif
-                    @if (session()->has('shipping_price') && session()->get('shipping_price') > 0)
-                      <div class="my-2"></div>
-                      <span>Shipping <br></span>
-                    @endif
                     Tax ({{ $tax }}%)<br>
+                    Payment fee ({{$payment_gateway_fee}}%) <br>
                     <span class="preview-order-totals-total">Total</span>
 
                   </div>
 
                   <div class="preview-order-totals-right">
                     {{ presentPrice(Cart::subtotal(), true) }} <br>
-                    @if (session()->has('coupon'))
-                        -{{ presentPrice($discount, true) }} <br>
-                        <hr>
-                        {{ presentPrice($newSubtotal, true) }} <br>
-                    @endif
                     @if (session()->has('shipping_price') && session()->get('shipping_price') > 0)
                         <div class="my-2"></div>
                         {{ presentPrice($shipping, true) }}
                         <br>
                     @endif
+                    @if (session()->has('coupon'))
+                        -{{ presentPrice($discount, true) }} <br>
+                        <hr>
+                        {{ presentPrice($newSubtotal, true) }} <br>
+                    @endif
                     {{ presentPrice($newTax, true) }} <br>
+                    {{ presentPrice($payment_fee, true) }} <br>
                     <span class="preview-order-totals-total">{{ presentPrice($newTotal, true) }}</span>
 
                   </div>

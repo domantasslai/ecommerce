@@ -15,6 +15,24 @@
   <span>Shopping Cart</span>
 @endcomponent
 
+<div class="container">
+  <div class="steps row">
+    <div class="line"></div>
+    <div class="step">
+      <div class="circle active">1</div>
+      <div class="label">Cart</div>
+    </div><!-- end "step" -->
+    <div class="step">
+      <div class="circle">2</div>
+      <div class="label">Order<span class="responsive_hide"> Information</span></div>
+    </div><!-- end "step" -->
+    <div class="step">
+      <div class="circle">3</div>
+      <div class="label">Preview<span class="responsive_hide"> Information</span></div>
+    </div><!-- end "step" -->
+  </div><!-- end "steps" -->
+</div>
+
 <div class="cart-section container">
     <div>
         @if (session()->has('success_message'))

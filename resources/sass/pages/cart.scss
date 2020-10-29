@@ -1,6 +1,6 @@
 .cart-section {
     display: grid;
-    grid-template-columns: 2fr 1fr;
+    grid-template-columns: 1fr;
     grid-gap: 30px;
     margin: 60px auto;
 
@@ -36,7 +36,7 @@
         }
 
         .cart-table-row-left {
-            width: 50%;
+            width: 35%;
         }
 
         .cart-table-row-right {
@@ -103,7 +103,7 @@
         .cart-totals-right {
             display: flex;
             justify-content: space-between;
-            width: 50%;
+            width: 25%;
             text-align: right;
         }
 

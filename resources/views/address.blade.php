@@ -14,6 +14,25 @@
 @endsection
 
 @section('content')
+    <div class="container">
+      <div class="steps row">
+        <div class="line"></div>
+        <div class="step">
+          <a href="{{ route('cart.index') }}">
+            <div class="circle complete">1</div>
+            <div class="label">Cart</div>
+          </a>
+        </div><!-- end "step" -->
+        <div class="step">
+          <div class="circle active">2</div>
+          <div class="label">Order<span class="responsive_hide"> Information</span></div>
+        </div><!-- end "step" -->
+        <div class="step">
+          <div class="circle">3</div>
+          <div class="label">Preview<span class="responsive_hide"> and Pay</span></div>
+        </div><!-- end "step" -->
+      </div><!-- end "steps" -->
+    </div>
     <div class="container address-container">
 
         @if (session()->has('success_message'))

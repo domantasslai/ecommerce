@@ -12334,6 +12334,73 @@ form button[type=submit] {
   color: #212121;
 }
 
+.steps {
+  font-family: "Lato", sans-serif;
+  margin: 30px 0;
+  position: relative;
+}
+
+.steps .line {
+  border-bottom: 2px solid #404041;
+  margin: 0 12%;
+  position: absolute;
+  top: 20px;
+  width: 76%;
+  z-index: 100;
+}
+
+.steps .step {
+  display: inline-block;
+  margin: 0 auto;
+  position: relative;
+  text-align: center;
+  width: 19%;
+  z-index: 200;
+}
+
+.steps .step .circle {
+  background: #FFFFFF;
+  border: 2px solid #404041;
+  border-radius: 20px;
+  -moz-border-radius: 20px;
+  -webkit-border-radius: 20px;
+  color: #404041;
+  display: inline-block;
+  font-size: 20px;
+  height: 40px;
+  line-height: 38px;
+  text-align: center;
+  width: 40px;
+  z-index: 500;
+}
+
+.steps .step .circle.active {
+  background: #008190;
+  border: 2px solid #008190;
+  color: #FFFFFF;
+}
+
+.steps .step .circle.complete {
+  background: #f4f3f1;
+  border: 2px solid #7f8272;
+  color: #7f8272;
+}
+
+.steps .step .label {
+  color: #7f8272;
+  display: block;
+  font-weight: 300;
+  margin-top: 10px;
+}
+
+@media screen and (max-width: 768px) {
+  .responsive_hide {
+    display: none;
+    visibility: hidden;
+    opacity: 0;
+  }
+}
+
 header.with-background {
   background: #F5F5F5;
   color: #212121;
@@ -12666,7 +12733,7 @@ footer {
 
 .cart-section {
   display: grid;
-  grid-template-columns: 2fr 1fr;
+  grid-template-columns: 1fr;
   grid-gap: 30px;
   margin: 60px auto;
 }
@@ -12701,7 +12768,7 @@ footer {
 }
 
 .cart-section .cart-table-row .cart-table-row-left {
-  width: 50%;
+  width: 35%;
 }
 
 .cart-section .cart-table-row .cart-table-row-right {
@@ -12757,7 +12824,7 @@ footer {
 .cart-section .cart-totals .cart-totals-right {
   display: flex;
   justify-content: space-between;
-  width: 50%;
+  width: 25%;
   text-align: right;
 }
 
@@ -13196,7 +13263,7 @@ h1.preview-order-heading {
 }
 
 .preview-order-section .preview-order-table-row .preview-order-table-img {
-  max-height: 60px;
+  max-height: 100px;
 }
 
 .preview-order-section .preview-order-table-row .preview-order-table-description {

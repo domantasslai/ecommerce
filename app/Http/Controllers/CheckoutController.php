@@ -38,9 +38,10 @@ class CheckoutController extends Controller
         $discount = getNumbers()->get('discount');
         $newSubtotal = getNumbers()->get('newSubtotal');
         $newTax = getNumbers()->get('newTax');
+
         $newTotal = getNumbers()->get('newTotal');
 
-        return view('checkout', compact('discount', 'newSubtotal', 'newTax', 'newTotal'));
+        return view('checkout', compact('discount', 'newSubtotal', 'newTax', 'newTotal', 'payment_gateway_fee'));
     }
 
     /*
@@ -65,6 +66,8 @@ class CheckoutController extends Controller
       $discount = getNumbers()->get('discount');
       $newSubtotal = getNumbers()->get('newSubtotal');
       $newTax = getNumbers()->get('newTax');
+      $payment_gateway_fee = getNumbers()->get('payment_gateway_fee');
+      $payment_fee = getNumbers()->get('payment_fee');
       $newTotal = getNumbers()->get('newTotal');
 
       try {
@@ -74,7 +77,8 @@ class CheckoutController extends Controller
           $paypalToken = null;
       }
 
-      return view('checkout.show', compact('discount', 'newSubtotal', 'newTax', 'newTotal', 'shipping', 'tax', 'paypalToken'));
+      return view('checkout.show', compact('discount', 'newSubtotal', 'newTax', 'newTotal',
+      'shipping', 'tax', 'paypalToken', 'payment_gateway_fee', 'payment_fee'));
     }
 
     /**
