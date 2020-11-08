@@ -1,4 +1,6 @@
 <?php
+
+use Illuminate\Support\Facades\Mail;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -50,7 +52,7 @@ Route::get('/order-preview', 'CheckoutController@show')->name('checkout.show');
 Route::post('/checkout', 'CheckoutController@store')->name('checkout.store');
 Route::post('/paypal-checkout', 'CheckoutController@paypalCheckout')->name('checkout.paypal');
 
-Route::get('/guest-checkout', 'CheckoutController@index')->name('guestCheckout.index');
+Route::get('/guest-checkout', 'AddressController@index')->name('guestCheckout.index');
 
 Route::get('/thankyou', 'ConfirmationController@index')->name('confirmation.index');
 // END CHECKOUT
@@ -74,3 +76,13 @@ Route::post('comments', 'CommentController@store')->name('comments.store');
 Route::get('/blog', 'BlogController@index')->name('blog.index');
 Route::get('/blog/{post}', 'BlogController@show')->name('blog.show');
 // END BLOG
+
+// MY PROFILE
+Route::middleware('auth')->group(function () {
+    Route::get('/my-profile', 'UsersController@edit')->name('users.edit');
+    Route::patch('/my-profile', 'UsersController@update')->name('users.update');
+
+    Route::get('/my-orders', 'OrdersController@index')->name('orders.index');
+    Route::get('/my-orders/{order}', 'OrdersController@show')->name('orders.show');
+});
+// END MY PROFILE

@@ -17,14 +17,9 @@
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
 
         <!-- Styles -->
-        {{-- <link href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css" rel="stylesheet"/> --}}
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
         <link rel="stylesheet" href="{{ asset('css/responsive.css') }}">
         <link href="https://fonts.googleapis.com/css?family=Nunito" rel="stylesheet">
-
-
-        <!-- Scripts -->
-        {{-- <script src="{{ asset('js/app.js') }}" defer></script> --}}
 
 
         @yield('extra-css')
@@ -34,10 +29,11 @@
 <body class="@yield('body-class', '')">
     @include('partials.nav')
 
-    @yield('content')
+    <div class="content">
+      @yield('content')
+    </div>
 
     @include('partials.footer')
-
 
     <script src="{{ asset('js/app.js') }}"></script>
     {{-- <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.4/jquery.min.js"></script> --}}

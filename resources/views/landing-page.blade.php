@@ -5,7 +5,7 @@
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1">
 
-        <title>CSS Grid Example</title>
+        <title>Dielektrik</title>
 
         <!-- Fonts -->
         <link href="https://fonts.googleapis.com/css?family=Montserrat|Roboto:300,400,700" rel="stylesheet">
@@ -15,11 +15,6 @@
         <link rel="stylesheet" href="{{ asset('css/algolia.css') }}">
         <link rel="stylesheet" href="{{ asset('css/app.css') }}">
         <link rel="stylesheet" href="{{ asset('css/responsive.css') }}">
-        <style media="screen">
-        .dropdown-toggle::after {
-          content: none;
-        }
-        </style>
     </head>
     <body>
         <header class="with-background">

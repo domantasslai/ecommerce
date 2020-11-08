@@ -10,13 +10,17 @@ function presentPrice($price, $curreny_sign = false){
   return number_format($price / 100, 2);
 }
 
+function presentDate($date)
+{
+    return Carbon::parse($date)->format('M d, Y');
+}
+
 function setActiveCategory($category, $output = 'active'){
   return request()->category == $category ? $output : '';
 }
 
 function productImage($path)
 {
-  // return $path;
   return $path && file_exists('storage/'.$path) ? Voyager::image($path) : asset('img/not-found.jpg');
 }
 
@@ -33,7 +37,7 @@ function getNumbers()
 {
     $countryIso = session()->get('userAddress')['billing_country'] ?? 'LT';
 
-    $tax = (int)(Tools::getTaxRate($countryIso ?? null, ''));
+    $tax_rate = (int)(Tools::getTaxRate($countryIso ?? null, ''));
 
     $discount = session()->get('coupon')['discount'] ?? 0;
     $code = session()->get('coupon')['name'] ?? null;
@@ -64,23 +68,22 @@ function getNumbers()
     }else {
       $payment_gateway_fee = 0;
     }
-    
-    // Tax calculation
-    $newTax = ($newSubtotal) * ($tax / 100);
 
-    // $newTax = ($newSubtotal + $shipping) * ($tax / 100) + $shipping;
+    // Tax calculation
+    $newTax = ($newSubtotal) * ($tax_rate / 100);
+
+
     $newTotal = $newSubtotal + $newTax;
-    // dd($payment_gateway_fee);
+
     $payment_fee =  $newTotal * ($payment_gateway_fee / 100);
     $newTotal = $newTotal + $payment_fee;
-    // $taxAndSubtotal = $newSubtotal + $newTax;
-    // $payment_gateway_total_fee = $taxAndSubtotal * ($payment_gateway_fee / 100);
 
+  // dd($tax_rate);
 
     // dd($newTotal);
     return collect([
         'shipping' => $shipping,
-        'tax' => $tax,
+        'tax_rate' => $tax_rate,
         'discount' => $discount,
         'code' => $code,
         'newSubtotal' => $newSubtotal,

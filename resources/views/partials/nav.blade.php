@@ -4,9 +4,9 @@
         <div class="logo"><a href="/"><img src="{{ asset('img/logo_dk_transperant.png') }}" alt=""></a></div>
     </div>
     <div class="top-nav-right">
-        @if (! (request()->is('checkout') || request()->is('guest-checkout')))
+        {{-- @if (! (request()->is('checkout') || request()->is('guest-checkout'))) --}}
           @include('partials.menus.main-right')
-        @endif
+        {{-- @endif --}}
     </div>
   </div> <!-- end top-nav -->
   <div class="nav-background">

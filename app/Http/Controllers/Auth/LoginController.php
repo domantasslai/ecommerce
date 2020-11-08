@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers\Auth;
 
+use Illuminate\Http\Request;
 use App\Http\Controllers\Controller;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
 
@@ -39,9 +40,27 @@ class LoginController extends Controller
 
 
     public function showLoginForm(){
-
-      session()->put('previousUrl', url()->previous());
+      if (url()->previous() == route('cart.index')) {
+        session()->put('previousUrl', route('address.index'));
+      }else {
+        session()->put('previousUrl', url()->previous());
+      }
       return view('auth.login');
+    }
+
+    public function logout(Request $request)
+    {
+        $cart = collect(session()->get('cart'));
+
+        $destination = \Auth::logout();
+
+        if (!config('cart.destroy_on_logout')) {
+            $cart->each(function ($rows, $identifier) {
+                session()->put('cart.' . $identifier, $rows);
+            });
+        }
+
+        return redirect()->to($destination);
     }
 
     public function redirectTo(){

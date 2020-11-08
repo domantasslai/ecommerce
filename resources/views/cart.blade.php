@@ -15,6 +15,7 @@
   <span>Shopping Cart</span>
 @endcomponent
 
+@if (Cart::count() > 0)
 <div class="container">
   <div class="steps row">
     <div class="line"></div>
@@ -32,6 +33,7 @@
     </div><!-- end "step" -->
   </div><!-- end "steps" -->
 </div>
+@endif
 
 <div class="cart-section container">
     <div>
@@ -229,9 +231,6 @@
     @endsection
 
     @section('extra-js')
-    <script src="{{ asset('js/app.js') }}">
-
-    </script>
     <script>
         (function(){
             const classname = document.querySelectorAll('.quantity')

@@ -11566,6 +11566,10 @@ table {
   border-spacing: 0;
 }
 
+.dropdown-toggle::after {
+  content: none;
+}
+
 html {
   box-sizing: border-box;
 }

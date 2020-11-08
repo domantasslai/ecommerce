@@ -12,6 +12,10 @@ use Auth;
 class AddressController extends Controller
 {
     public function index(Request $request){
+
+      if (!auth()->check() && !request()->is('guest-checkout')) {
+        return redirect()->route('login');
+      }
       $countries = Country::all();
 
       if (Auth::check()) {

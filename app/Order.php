@@ -18,13 +18,13 @@ class Order extends Model
       // Dellivery
       'delivery_email', 'delivery_firstName', 'delivery_lastName', 'delivery_country', 'delivery_address',
       'delivery_city', 'delivery_province', 'delivery_postalcode', 'delivery_phone',
-      'name_on_card', 'discount', 'discount_code', 'subtotal', 'tax', 'total', 'payment_gateway', 'shipped',
-      'error',
+      'name_on_card', 'discount', 'discount_code', 'subtotal', 'tax', 'total', 'payment_gateway', 'payment_gateway_fee', 'shipped',
+      'error', 'tax_rate', 'payment_fee', 'shipping_price'
     ];
 
 
     public function user(){
-      return $this->belongsTo(User::class);
+      return $this->belongsTo('App\User');
     }
 
     public function products()

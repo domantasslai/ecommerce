@@ -13,6 +13,7 @@
         "braintree/braintree_php": "^5.3",
         "cartalyst/stripe-laravel": "^11.0",
         "fideloper/proxy": "~4.0",
+        "guzzlehttp/guzzle": "^7.2",
         "hardevine/shoppingcart": "^2.7",
         "laravel/framework": "^6.0",
         "laravel/helpers": "^1.2",

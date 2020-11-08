@@ -34,7 +34,7 @@ class CheckoutController extends Controller
           return redirect()->route('checkout.index');
         }
 
-        $tax = getNumbers()->get('tax');
+        $tax = getNumbers()->get('tax_rate');
         $discount = getNumbers()->get('discount');
         $newSubtotal = getNumbers()->get('newSubtotal');
         $newTax = getNumbers()->get('newTax');
@@ -62,7 +62,7 @@ class CheckoutController extends Controller
       }
 
       $shipping = getNumbers()->get('shipping');
-      $tax = getNumbers()->get('tax');
+      $tax = getNumbers()->get('tax_rate');
       $discount = getNumbers()->get('discount');
       $newSubtotal = getNumbers()->get('newSubtotal');
       $newTax = getNumbers()->get('newTax');
@@ -165,6 +165,7 @@ class CheckoutController extends Controller
 
         if ($result->success) {
             $order = $this->addToOrdersTablesPaypal(
+                session('userAddress'),
                 $transaction->paypal['payerEmail'],
                 $transaction->paypal['payerFirstName'].' '.$transaction->paypal['payerLastName'],
                 null
@@ -222,6 +223,10 @@ class CheckoutController extends Controller
             'tax' => getNumbers()->get('newTax'),
             'total' => getNumbers()->get('newTotal'),
             'error' => $error,
+            'tax_rate' => getNumbers()->get('tax_rate'),
+            'payment_gateway_fee' => getNumbers()->get('payment_gateway_fee'),
+            'payment_fee' => getNumbers()->get('payment_fee'),
+            'shipping_price' => getNumbers()->get('shipping'),
         ]);
 
         // Insert into order_product table
@@ -236,13 +241,29 @@ class CheckoutController extends Controller
         return $order;
     }
 
-    protected function addToOrdersTablesPaypal($email, $name, $error)
+    protected function addToOrdersTablesPaypal($session, $email, $name, $error)
     {
         // Insert into orders table
         $order = Order::create([
             'user_id' => auth()->user() ? auth()->user()->id : null,
             'billing_email' => $email,
             'billing_firstName' => $name,
+            'billing_lastName' => $session['billing_lastName'],
+            'billing_address' => $session['billing_address'],
+            'billing_country' => $session['billing_country'],
+            'billing_city' => $session['billing_city'],
+            'billing_province' => $session['billing_province'],
+            'billing_postalcode' => $session['billing_postalcode'],
+            'billing_phone' => $session['billing_phone'],
+            // Delivery address
+            'delivery_email' => $session['delivery_email'],
+            'delivery_firstName' => $session['delivery_firstName'],
+            'delivery_lastName' => $session['delivery_lastName'],
+            'delivery_country' => $session['delivery_country'],
+            'delivery_address' => $session['delivery_address'],
+            'delivery_city' => $session['delivery_city'],
+            'delivery_province' => $session['delivery_province'],
+            'delivery_postalcode' => $session['delivery_postalcode'],
             'discount' => getNumbers()->get('discount'),
             'discount_code' => getNumbers()->get('code'),
             'subtotal' => getNumbers()->get('newSubtotal'),
@@ -250,6 +271,10 @@ class CheckoutController extends Controller
             'total' => getNumbers()->get('newTotal'),
             'error' => $error,
             'payment_gateway' => 'paypal',
+            'tax_rate' => getNumbers()->get('tax_rate'),
+            'payment_gateway_fee' => getNumbers()->get('payment_gateway_fee'),
+            'payment_fee' => getNumbers()->get('payment_fee'),
+            'shipping_price' => getNumbers()->get('shipping'),
         ]);
 
         // Insert into order_product table
@@ -264,7 +289,8 @@ class CheckoutController extends Controller
         return $order;
     }
 
-    public function decreaseQuantities(){
+    public function decreaseQuantities()
+    {
       foreach (Cart::content() as $item) {
           $product = Product::find($item->model->id);
 
