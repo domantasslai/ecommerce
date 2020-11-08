@@ -90,8 +90,10 @@
             </div>
 
             <div class="spacer"></div>
+            {{ $orders->appends(request()->input())->links() }}
         </div>
     </div>
+
 
 @endsection
 

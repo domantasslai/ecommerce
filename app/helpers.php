@@ -1,5 +1,6 @@
 <?php
 use App\Extra\Tools;
+use App\Country;
 use Carbon\Carbon;
 
 
@@ -103,4 +104,10 @@ function getStockLevel($quantity){
   }
 
   return $stockLevel;
+}
+
+function getCountryName($countryIso)
+{
+  $country = Country::where('iso', $countryIso)->pluck('nicename')->first();
+  return $country ? $country : "Can't get country name";
 }

@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Order;
 use App\User;
+use App\Country;
 use Illuminate\Http\Request;
 
 class OrdersController extends Controller
@@ -16,9 +17,8 @@ class OrdersController extends Controller
     public function index()
     {
         // $orders = auth()->user()->orders; // n + 1 issues
-        $orders = auth()->user()->orders()->with('products')->latest()->get(); // fix n + 1 issues
+        $orders = auth()->user()->orders()->with('products')->latest()->paginate(5); // fix n + 1 issues
         // dd($orders);
-
         return view('my-orders')->with('orders', $orders);
     }
 

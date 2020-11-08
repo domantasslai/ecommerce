@@ -57,7 +57,7 @@
                     </div>
                     <div class="form-group">
                         <input id="password" type="password" name="password" placeholder="Password">
-                        <p><i>Leave password blank to keep current password</i></p>
+                        <p style="font-size: 12px;">Leave password blank to keep current password</p>
                     </div>
                     <div class="form-group">
                         <input id="password-confirm" type="password" name="password_confirmation" placeholder="Confirm Password">

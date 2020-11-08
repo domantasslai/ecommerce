@@ -4,6 +4,11 @@
 
 @section('extra-css')
     <link rel="stylesheet" href="{{ asset('css/algolia.css') }}">
+    <style media="screen">
+      .order-products table>tbody>tr{
+        height: 35px;
+      }
+    </style>
 @endsection
 
 @section('content')
@@ -68,7 +73,7 @@
                         </div>
                     </div>
                     <div class="order-products">
-                        <table class="table" style="width:50%">
+                        <table class="" style="width:50%">
                             <tbody>
                                 <tr>
                                     <td>Name</td>
@@ -82,6 +87,13 @@
                                     <td>City</td>
                                     <td>{{ $order->billing_city }}</td>
                                 </tr>
+                                <tr>
+                                    <td>Country</td>
+                                    <td>{{ getCountryName($order->billing_country) }}</td>
+                                </tr>
+                                <tr>
+                                  <td></td>
+                                </tr>
                                 @if ($order->shipping_price > 0)
                                   <tr>
                                     <td>Shipping price</td>
@@ -90,7 +102,7 @@
                                 @endif
                                 @if ($order->discount > 0)
                                   <tr>
-                                    <td>Discount:</td>
+                                    <td>Discount</td>
                                     <td>{{ presentPrice($order->discount, true) }}</td>
                                   </tr>
                                 @endif
@@ -114,9 +126,8 @@
                                     <td>Total</td>
                                     <td>{{ presentPrice($order->total, true) }}</td>
                                 </tr>
-                            </tbody>
+                              </tbody>
                         </table>
-
                     </div>
                 </div> <!-- end order-container -->
 
