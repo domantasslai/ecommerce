@@ -26,7 +26,7 @@ class LandingPageController extends Controller
                  ->orderBy('total','desc')
                  ->take(4)
                  ->get();
-
+        // dd($mostBuyableProducts);
         return view('landing-page', compact('products', 'posts', 'categories', 'mostBuyableProducts'));
     }
 }

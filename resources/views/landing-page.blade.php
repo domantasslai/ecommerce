@@ -88,7 +88,7 @@
                 </div> <!-- end products -->
 
                 <div class="spacer"></div>
-                <h2 class="text-center">On sale</h2>
+                <h2 class="text-center">More products</h2>
                 <div class="spacer"></div>
 
                 <div class="products text-center">

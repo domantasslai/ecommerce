@@ -4,6 +4,16 @@
 
 @section('extra-css')
     <link rel="stylesheet" href="{{ asset('css/algolia.css') }}">
+    <style media="screen">
+      .carousel-item img{
+        top: 0;
+        left: 0;
+        min-width: 100%;
+        height: 550px;
+        max-height: 550px;
+        width: auto;
+      }
+    </style>
 @endsection
 
 @section('content')
@@ -40,16 +50,19 @@
               <div class="blog-description">{!! $post->body !!}</div>
             </div>
             <div class="spacer"></div>
+            @if (isset($post->images))
             <div id="myCarousel" class="carousel slide" data-ride="carousel">
               <ol class="carousel-indicators">
                 <li data-target="#myCarousel" data-slide-to="0" class="active"></li>
               </ol>
               <div class="carousel-inner">
-                @foreach(json_decode($post->images) as $key => $slider)
+                @forelse(json_decode($post->images) as $key => $slider)
                   <div class="carousel-item {{$key == 0 ? 'active' : '' }}">
                     <img src="{{ productImage($slider) }}" class="d-block" style=""  alt="...">
                   </div>
-                @endforeach
+                @empty
+
+                @endforelse
               </div>
               <a class="carousel-control-prev" href="#myCarousel" role="button"  data-slide="prev">
                 <span class="carousel-control-prev-icon" aria-hidden="true">     </span>
@@ -60,6 +73,7 @@
                 <span class="sr-only">Next</span>
               </a>
             </div>
+            @endif
         </div> <!-- end container -->
     </div> <!-- end blog-section -->
 

@@ -58,8 +58,11 @@ class BlogController extends Controller
     public function show($post)
     {
         $post = Post::where('slug', $post)->first();
-        $posts = Post::take(3)->inRandomOrder()->get();
-        // dd($post);
+        if ($post->status != 'PUBLISHED') {
+          return redirect()->route('blog.index')->withErrors('Something went wrong... We cannot find the Blog post.');
+        }
+        $posts = Post::where('status', 'PUBLISHED')->take(3)->inRandomOrder()->get();
+
         return view('blog.show', compact('post', 'posts'));
     }
 

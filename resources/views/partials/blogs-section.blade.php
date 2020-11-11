@@ -8,7 +8,7 @@
           @foreach ($posts as $key => $post)
             <div class="blog-post" id="blog{{$key+1}}">
               <a href="{{ route('blog.show', $post->slug) }}"><img src="{{ productImage($post->image) }}" alt="blog image"></a>
-              <a href="#"><h2 class="blog-title">{{ $post->title }}</h2></a>
+              <a href="{{ route('blog.show', $post->slug) }}" style="text-decoration:none"><h2 class="blog-title">{{ $post->title }}</h2></a>
               <div class="blog-description">{{ $post->meta_description }}</div>
             </div>
           @endforeach

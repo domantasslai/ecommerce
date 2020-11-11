@@ -14,26 +14,25 @@
       <a href="{{ route('blog.index') }}">Blog</a>
     @endcomponent
 
-    <div class="container">
-      @if (session()->has('success_message'))
-        <div class="alert alert-success">
-          {{ session()->get('success_message') }}
-        </div>
-      @endif
-
-      @if(count($errors) > 0)
-        <div class="alert alert-danger">
-          <ul>
-            @foreach ($errors->all() as $error)
-              <li>{{ $error }}</li>
-            @endforeach
-          </ul>
-        </div>
-      @endif
-    </div>
-
     <div class="blog-section">
         <div class="container">
+          <div class="container">
+            @if (session()->has('success_message'))
+              <div class="alert alert-success">
+                {{ session()->get('success_message') }}
+              </div>
+            @endif
+
+            @if(count($errors) > 0)
+              <div class="alert alert-danger">
+                <ul>
+                  @foreach ($errors->all() as $error)
+                    <li>{{ $error }}</li>
+                  @endforeach
+                </ul>
+              </div>
+            @endif
+          </div>
             <h1 class="text-center">From Our Blog</h1>
 
             <p class="section-description text-center">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Et sed accusantium maxime dolore cum provident itaque ea, a architecto alias quod reiciendis ex ullam id, soluta deleniti eaque neque perferendis.</p>
