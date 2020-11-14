@@ -63,7 +63,17 @@
           &nbsp;
           <div class="athenaProductPage_hr"></div>
           &nbsp;
-          <div class="product-section-price">{{ $product->presentPrice() }}</div>
+          <div class="product-section-price">{{ $product->presentPrice() }}
+            @if ($product->quantity > 0)
+              <form class="" action="{{ route('cart.store') }}" method="post">
+                @csrf
+                <input type="hidden" name="id" value="{{ $product->id }}">
+                <input type="hidden" name="name" value="{{ $product->name }}">
+                <input type="hidden" name="price" value="{{ $product->price }}">
+                <button type="submit" class="button button-plain" name="button">Add to Cart</button>
+              </form>
+            @endif
+          </div>
           &nbsp;
           <div class="athenaProductPage_hr"></div>
           &nbsp;
@@ -73,15 +83,6 @@
 
           <p>&nbsp;</p>
 
-        @if ($product->quantity > 0)
-          <form class="" action="{{ route('cart.store') }}" method="post">
-            @csrf
-            <input type="hidden" name="id" value="{{ $product->id }}">
-            <input type="hidden" name="name" value="{{ $product->name }}">
-            <input type="hidden" name="price" value="{{ $product->price }}">
-            <button type="submit" class="button button-plain" name="button">Add to Cart</button>
-          </form>
-        @endif
       </div>
     </div> <!-- end product-section -->
 
@@ -91,7 +92,7 @@
       </div>
     </div>
     @include('partials.might-like')
-  
+
 @endsection
 
 @section('extra-js')

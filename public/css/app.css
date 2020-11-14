@@ -12726,6 +12726,8 @@ footer {
 .product-section-price {
   font-size: 38px;
   color: #212121;
+  display: flex;
+  justify-content: space-between;
 }
 
 .athenaProductPage_hr {

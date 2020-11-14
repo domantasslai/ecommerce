@@ -69,7 +69,8 @@
 .product-section-price {
     font-size: 38px;
     color: $text-color;
-    // margin-bottom: 16px;
+    display: flex;
+    justify-content: space-between;
 }
 
 .athenaProductPage_hr{

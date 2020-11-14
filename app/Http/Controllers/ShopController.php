@@ -15,6 +15,7 @@ class ShopController extends Controller
      */
     public function index()
     {
+      // dd(config('scout.algolia.id'));
         $pagination = 9;
         $categories = Category::all();
         if (request()->category) {

@@ -45,7 +45,6 @@
                 <div id="stats-container"></div>
 
                 <div class="spacer"></div>
-                <h2>Categories</h2>
                 <div id="refinement-list">
                     <!-- RefinementList widget will appear here -->
                 </div>

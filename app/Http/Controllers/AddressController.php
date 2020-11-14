@@ -6,12 +6,17 @@ use App\Country;
 
 use Illuminate\Http\Request;
 use App\Http\Requests\AddressRequest;
+use Gloudemans\Shoppingcart\Facades\Cart;
 
 use Auth;
 
 class AddressController extends Controller
 {
     public function index(Request $request){
+
+      if (Cart::instance('default')->count() == 0) {
+        return redirect()->route('cart.index');
+      }
 
       if (!auth()->check() && !request()->is('guest-checkout')) {
         return redirect()->route('login');
@@ -61,6 +66,9 @@ class AddressController extends Controller
     * Store User information to session
     */
     public function store(AddressRequest $request){
+        if (Cart::instance('default')->count() == 0) {
+          return redirect()->route('cart.index');
+        }
 
         session()->put('userAddress', collect([
           // Delivery data

@@ -23,6 +23,10 @@
           Account
           </a>
           <div class="dropdown-menu p-3">
+            @if (auth()->user()->hasRole('admin'))
+              <a href="/admin">Admin panel</a>
+              <div class="my-2"></div>
+            @endif
               <a href="{{ route('users.edit') }}">My Account</a>
               <div class="my-2"></div>
               <a href="{{ route('orders.index') }}">My Orders</a>

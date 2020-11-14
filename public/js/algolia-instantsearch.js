@@ -1,7 +1,7 @@
 (function() {
     const search = instantsearch({
-        appId: 'P53SZUIML8',
-        apiKey: '19f54cccab5efbeb0d351b307326a864',
+        appId: 'SE1PM17YYX',
+        apiKey: '1a583846998df570a1715818ba5d15b5',
         indexName: 'products',
         urlSync: true
     });
@@ -16,18 +16,18 @@
                         <a href="${window.location.origin}/shop/${item.slug}">
                             <div class="instantsearch-result">
                                 <div>
-                                    <img src="${window.location.origin}/${item.image}" alt="img" class="algolia-thumb-result">
+                                    <img src="${window.location.origin}/storage/${item.image}" alt="img" class="algolia-thumb-result">
                                 </div>
                                 <div>
-                                    <div class="result-title">
-                                        ${item._highlightResult.name.value}
-                                    </div>
-                                    <div class="result-details">
-                                        ${item._highlightResult.details.value}
-                                    </div>
-                                    <div class="result-price">
-                                        $${(item.price / 100).toFixed(2)}
-                                    </div>
+                                <div class="result-title">
+                                    ${item._highlightResult.name.value}
+                                </div>
+                                <div class="result-details">
+                                    ${item._highlightResult.details.value}
+                                </div>
+                                <div class="result-price">
+                                    ${(item.price / 100).toFixed(2)} &euro;
+                                </div>
                                 </div>
                             </div>
                         </a>
