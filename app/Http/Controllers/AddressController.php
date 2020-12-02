@@ -57,9 +57,10 @@ class AddressController extends Controller
       $paymentType = (session('userAddress')) ? session('userAddress')['paymentType'] : null;
 
       return view('address', compact(
-        'countries', 'billing_email', 'billing_firstName', 'billing_lastName', 'billing_address', 'billing_countryIso', 'billing_city', 'billing_province', 'billing_postalcode', 'billing_phone', 'paymentType',
-        'delivery_email', 'delivery_firstName', 'delivery_lastName', 'delivery_address', 'delivery_countryIso', 'delivery_city', 'delivery_province', 'delivery_postalcode', 'delivery_phone'
-        ));
+        'countries', 'billing_email', 'billing_firstName', 'billing_lastName', 'billing_address',
+        'billing_countryIso', 'billing_city', 'billing_province', 'billing_postalcode', 'billing_phone', 'paymentType',
+        'delivery_email', 'delivery_firstName', 'delivery_lastName', 'delivery_address', 'delivery_countryIso',
+        'delivery_city', 'delivery_province', 'delivery_postalcode', 'delivery_phone'));
     }
 
     /*
@@ -96,6 +97,5 @@ class AddressController extends Controller
         ]));
 
       return redirect()->route('checkout.show');
-
     }
 }

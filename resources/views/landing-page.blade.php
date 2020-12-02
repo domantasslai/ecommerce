@@ -36,7 +36,7 @@
             </div>
             <div class="hero container">
                 <div class="hero-copy">
-                    <h1>Use code: $$$</h1>
+                    <h1>Use code: {{ $coupons }}</h1>
                     <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Numquam, velit.</p>
 
                     <div class="hero-buttons">

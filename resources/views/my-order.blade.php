@@ -148,7 +148,7 @@
                                     <div>
                                         <a href="{{ route('shop.show', $product->slug) }}">{{ $product->name }}</a>
                                     </div>
-                                    <div>{{ presentPrice($product->price, true) }}</div>
+                                    <div>{{ presentPrice($product->pivot->unit_price, true) }}</div>
                                     <div>Quantity: {{ $product->pivot->quantity }}</div>
                                 </div>
                             </div>

@@ -59,6 +59,17 @@
             <h2>{{ Cart::count() }} item(s) in Shopping Cart</h2>
 
             <div class="cart-table">
+                <div class="cart-table-row">
+                  <div class="cart-table-row-left">
+                    <span>Item:</span>
+                  </div>
+                  <div class="cart-table-row-right">
+                    <span>Qty</span>
+                    <span style="padding-right: 25px;">Unit price</span>
+                    <span style="padding-right: 50px;">Price</span>
+                    <span></span>
+                  </div>
+                </div>
                 @foreach (Cart::content() as $item)
                 <div class="cart-table-row">
                     <div class="cart-table-row-left">
@@ -87,6 +98,7 @@
                                 @endfor
                             </select>
                         </div>
+                        <div>{{ presentPrice($item->price, true) }}</div>
                         <div>{{ presentPrice($item->subtotal, true) }}</div>
                         <div class="">
                           <form action="{{ route('cart.destroy', $item->rowId) }}" method="POST">

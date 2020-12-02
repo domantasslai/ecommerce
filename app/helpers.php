@@ -59,7 +59,6 @@ function getNumbers()
 
     if ($payment_gateway_fee != null) {
       if ($payment_gateway_fee['paymentType'] == 'stripe') {
-        // dd('cia');
         $payment_gateway_fee = 3;
       }elseif ($payment_gateway_fee['paymentType'] == 'paypal') {
         $payment_gateway_fee = 5;
@@ -79,9 +78,6 @@ function getNumbers()
     $payment_fee =  $newTotal * ($payment_gateway_fee / 100);
     $newTotal = $newTotal + $payment_fee;
 
-  // dd($tax_rate);
-
-    // dd($newTotal);
     return collect([
         'shipping' => $shipping,
         'tax_rate' => $tax_rate,

@@ -4,7 +4,7 @@ namespace App;
 
 use Illuminate\Database\Eloquent\Model;
 use App\User;
-use App\Product;
+use App\OrderProduct;
 
 class Order extends Model
 {
@@ -29,6 +29,6 @@ class Order extends Model
 
     public function products()
     {
-        return $this->belongsToMany(Product::class)->withPivot('quantity');
+        return $this->belongsToMany(Product::class)->withPivot('quantity', 'unit_price');
     }
 }

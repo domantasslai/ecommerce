@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Coupon;
 use App\Product;
 use App\Category;
 use \TCG\Voyager\Models\Post;
@@ -26,7 +27,8 @@ class LandingPageController extends Controller
                  ->orderBy('total','desc')
                  ->take(4)
                  ->get();
-        // dd($mostBuyableProducts);
-        return view('landing-page', compact('products', 'posts', 'categories', 'mostBuyableProducts'));
+        $coupons = Coupon::inRandomOrder()->pluck('code')->first();
+
+        return view('landing-page', compact('products', 'posts', 'categories', 'mostBuyableProducts', 'coupons'));
     }
 }

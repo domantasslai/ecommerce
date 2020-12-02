@@ -15,7 +15,6 @@ class ShopController extends Controller
      */
     public function index()
     {
-      // dd(config('scout.algolia.id'));
         $pagination = 9;
         $categories = Category::all();
         if (request()->category) {
@@ -24,7 +23,7 @@ class ShopController extends Controller
           });
           $categoryName = optional($categories->where('slug', request()->category)->first())->name;
         }else {
-          $products = Product::with('onSale')->where('featured', true);
+          $products = Product::where('featured', true);
           $categoryName = 'Featured';
         }
 
@@ -47,7 +46,7 @@ class ShopController extends Controller
     public function show($slug)
     {
         $product = Product::where('slug', $slug)->withCount('comments')->firstOrFail();
-        $product->load('comments', 'onSale');
+        $product->load('comments');
         $ratings = $product->comments->map(function ($item) {
             if ($item->rating) {
               return (int)$item->rating;

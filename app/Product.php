@@ -2,38 +2,18 @@
 
 namespace App;
 
-use App\onSale;
 use Laravelista\Comments\Comment;
 use Illuminate\Database\Eloquent\Model;
-use Nicolaslopezj\Searchable\SearchableTrait;
 use Laravel\Scout\Searchable;
 use Laravelista\Comments\Commentable;
 use Illuminate\Support\Facades\Config;
 
 class Product extends Model
 {
-    use SearchableTrait, Searchable, Commentable;
+    use Searchable, Commentable;
 
     protected $fillable = ['quantity'];
-    /**
-     * Searchable rules.
-     *
-     * @var array
-    */
-    protected $searchable = [
-        /**
-         * Columns and their priority in search results.
-         * Columns with higher values are more important.
-         * Columns with equal values have equal importance.
-         *
-         * @var array
-         */
-        'columns' => [
-            'products.name' => 10,
-            'products.details' => 5,
-            'products.description' => 2,
-        ],
-    ];
+
 
     public function categories()
     {
@@ -68,9 +48,5 @@ class Product extends Model
         ];
 
         return array_merge($array, $extraFields);
-    }
-
-    public function onSale(){
-      return $this->hasMany(onSale::class, 'product_id');
     }
 }
