@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use App\Coupon;
 use App\Jobs\UpdateCoupon;
 use Illuminate\Http\Request;
+use Gloudemans\Shoppingcart\Facades\Cart;
 
 class CouponsController extends Controller
 {
@@ -21,6 +22,12 @@ class CouponsController extends Controller
 
         if (!$coupon) {
           return redirect()->route('cart.index')->withErrors('Invalid coupon code. Please try again.');
+        }
+
+        $subtotal = getNumbers()->get('newSubtotal');
+
+        if($coupon->discount($subtotal) > $subtotal){
+          return redirect()->route('cart.index')->withErrors('Shopping cart is too small. Please add more items.');
         }
 
         dispatch_now(new UpdateCoupon($coupon));

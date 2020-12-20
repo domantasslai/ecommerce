@@ -12555,6 +12555,12 @@ header .nav-background .bottom-nav.container {
   padding: 0;
 }
 
+header .nav-background .bottom-nav .checked_nav_item {
+  background-color: #F5F5F5;
+  color: #003c44;
+  text-decoration: none;
+}
+
 footer {
   background: #535353;
   color: #e9e9e9;

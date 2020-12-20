@@ -144,6 +144,12 @@ header.with-background{
         &.container{
           padding: 0;
         }
+
+        .checked_nav_item{
+          background-color: #F5F5F5;
+          color: #003c44;
+          text-decoration: none;
+        }
       }
     }
   }

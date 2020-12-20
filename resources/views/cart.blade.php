@@ -78,7 +78,7 @@
                             <div class="cart-table-item"><a href="{{ route('shop.show', $item->model->slug) }}">{{ $item->model->name }}</a></div>
                             <div class="cart-table-description">{{ $item->model->details }}</div>
                             <div class="spacer"></div>
-                            <div class="cart-table-actions">
+                            {{-- <div class="cart-table-actions">
                               <form action="{{ route('cart.switchToSaveForLater', $item->rowId) }}" method="POST">
                                   {{ csrf_field() }}
 
@@ -87,7 +87,7 @@
                                     <span class="saveToWishlist"> Save to Wishlist</span>
                                   </button>
                               </form>
-                            </div>
+                            </div> --}}
                         </div>
                     </div>
                     <div class="cart-table-row-right">
@@ -188,7 +188,7 @@
 
             @endif
 
-            @if (Cart::instance('saveForLater')->count() > 0)
+            {{-- @if (Cart::instance('saveForLater')->count() > 0)
 
             <h2>{{ Cart::instance('saveForLater')->count() }} item(s) Saved For Later</h2>
 
@@ -231,7 +231,7 @@
 
             <h3>You have no items Saved for Later.</h3>
 
-            @endif
+            @endif --}}
 
         </div>
 

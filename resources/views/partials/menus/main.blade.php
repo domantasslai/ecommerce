@@ -1,5 +1,7 @@
   @foreach($items as $menu_item)
-            <a href="{{ $menu_item->link() }}">
+            <a href="{{ $menu_item->link() }}"
+              class="@if ('/'.Request::segment(1) == $menu_item->link())checked_nav_item @endif">
+
                 {{ $menu_item->title }}
                 @if ($menu_item->title === 'Cart')
                     @if (Cart::instance('default')->count() > 0)
