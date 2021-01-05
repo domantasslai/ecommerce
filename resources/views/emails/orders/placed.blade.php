@@ -9,7 +9,18 @@ Thank you for your order.
 
 **Order Name:** {{ $order->billing_name }}
 
-**Order Total:** ${{ round($order->billing_total / 100, 2) }}
+@if($order->discount > 0)
+**Order discount:** {{ round($order->discount / 100, 2) }} &euro;
+@endif
+
+
+@if($order->shipping_price > 0)
+**Order shipping:** {{ round($order->shipping_price / 100, 2) }} &euro;
+@endif
+
+**Order Tax ({{ $order->tax_rate }}%):** {{ round($order->tax / 100, 2) }} &euro;
+
+**Order Total:** {{ round($order->billing_total / 100, 2) }} &euro;
 
 **Items Ordered**
 

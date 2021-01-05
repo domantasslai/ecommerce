@@ -2,7 +2,7 @@
     <div class="container">
         <h1 class="text-center">From Our Blog</h1>
 
-        <p class="section-description text-center">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Et sed accusantium maxime dolore cum provident itaque ea, a architecto alias quod reiciendis ex ullam id, soluta deleniti eaque neque perferendis.</p>
+        {{-- <p class="section-description text-center">Lorem ipsum dolor sit amet, consectetur adipisicing elit. Et sed accusantium maxime dolore cum provident itaque ea, a architecto alias quod reiciendis ex ullam id, soluta deleniti eaque neque perferendis.</p> --}}
 
         <div class="blog-posts">
           @foreach ($posts as $key => $post)

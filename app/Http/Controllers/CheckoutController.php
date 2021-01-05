@@ -52,7 +52,6 @@ class CheckoutController extends Controller
       if (Cart::instance('default')->count() == 0) {
         return redirect()->route('shop.index');
       }
-      // dd(Cart::content());
 
       if(session('userAddress') == null){
         return redirect()->route('address.index')->withErrors('Please fill up address information');
@@ -117,15 +116,15 @@ class CheckoutController extends Controller
                ],
           ]);
 
-          // dd($charge);
+
            // SUCCESSFUL
           $order = $this->addToOrdersTables(session('userAddress'), null);
           Mail::send(new OrderPlaced($order));
-          // dd('cia');
+
           // decrease the quantities of all the products in the cart
           $this->decreaseQuantities();
           Cart::instance('default')->destroy();
-          // dd('cia');
+
           session()->forget('coupon');
           session()->forget('userAddress');
 
@@ -300,9 +299,7 @@ class CheckoutController extends Controller
     {
       foreach (Cart::content() as $item) {
           $product = Product::find($item->model->id);
-          
           $product->update(['quantity' => $product->quantity - $item->qty]);
-          // dd('cia');
       }
     }
 

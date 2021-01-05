@@ -27,10 +27,10 @@
               <a href="/admin">Admin panel</a>
               <div class="my-2"></div>
             @endif
-              <a href="{{ route('users.edit') }}">My Account</a>
+              {{-- <a href="{{ route('users.edit') }}">My Account</a>
               <div class="my-2"></div>
               <a href="{{ route('orders.index') }}">My Orders</a>
-              <div class="my-2"></div>
+              <div class="my-2"></div> --}}
               <a class="" href="{{ route('logout') }}" onclick="event.preventDefault();
                   document.getElementById('logout-form').submit();">
                   {{ __('Logout') }}

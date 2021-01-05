@@ -35,7 +35,7 @@
 @endif
     <img class="mr-3 mb-3 rounded-circle" src="{{ profileImage($comment->commenter->avatar) }}" alt="{{ $comment->commenter->name ?? $comment->guest_name }} Avatar" style="width: 6%;">
     <div class="media-body">
-        <h5 class="mt-0 mb-1">{{ $comment->commenter->name ?? $comment->guest_name }} @if($comment->rating)<span class="Stars px-3" style="--rating: {{ $comment->rating }};" aria-label="Rating of this product is 2.3 out of 5."></span>@endif - <small class="text-muted"> {{ $comment->created_at->diffForHumans() }}</small></h5>
+        <h5 class="mt-0 mb-1">{{ $comment->commenter->name ?? $comment->guest_name }} @if($comment->rating)<span class="Stars px-3" style="--rating: {{ $comment->rating }};" aria-label="Rating of this product is 2.3 out of 5."></span>@endif <small class="text-muted"> {{ $comment->created_at->diffForHumans() }}</small></h5>
         <div style="white-space: pre-wrap;">{!! $markdown->line($comment->comment) !!}</div>
 
         <div>

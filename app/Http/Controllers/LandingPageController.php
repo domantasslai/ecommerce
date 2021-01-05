@@ -19,7 +19,7 @@ class LandingPageController extends Controller
     {
         $products = Product::where('featured', true)->take(8)->inRandomOrder()->get();
 
-        $posts = Post::take(3)->inRandomOrder()->get();
+        $posts = Post::take(3)->where('status', 'PUBLISHED')->inRandomOrder()->get();
         $categories = Category::all();
         $mostBuyableProducts = Product::leftJoin('order_product','products.id','=','order_product.product_id')
                  ->selectRaw('products.*, COALESCE(sum(order_product.quantity),0) total')

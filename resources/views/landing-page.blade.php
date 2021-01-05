@@ -37,7 +37,13 @@
             <div class="hero container">
                 <div class="hero-copy">
                     <h1>Use code: {{ $coupons }}</h1>
-                    <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Numquam, velit.</p>
+                    <p>And get
+                    @if($coupon->type == 'fixed')
+                      {{ presentPrice($coupons->value, true) }}
+                    @else
+                      {{ $coupons->percent_off }} %
+                    @endif
+                    off from the total amount of the cart</p>
 
                     <div class="hero-buttons">
                         <a href="{{ route('shop.index') }}" class="button">Shop now</a>
@@ -54,7 +60,7 @@
             <div class="container">
                 <h1 class="text-center">Our products</h1>
 
-                <p class="section-description text-center">Lorem ipsum dolor sit amet, consectetur adipisicing elit. A aliquid earum fugiat debitis nam, illum vero, maiores odio exercitationem quaerat. Impedit iure fugit veritatis cumque quo provident doloremque est itaque.</p>
+                {{-- <p class="section-description text-center">Lorem ipsum dolor sit amet, consectetur adipisicing elit. A aliquid earum fugiat debitis nam, illum vero, maiores odio exercitationem quaerat. Impedit iure fugit veritatis cumque quo provident doloremque est itaque.</p> --}}
 
                 <div class="spacer"></div>
                 <h2 class="text-center">Shop by category</h2>
@@ -63,13 +69,13 @@
                   @foreach ($categories as $key => $category)
                     <div class="category col-lg-4">
                       <a href="{{ route('shop.index', ['category' => $category->slug]) }}">
-                        <img class="category_img" src="{{ Voyager::image($category->image) }}" alt="">
+                        <img class="category_img" src="{{ productImage($category->image) }}" alt="">
                         <div class="text-center category_name">
                           {{ $category->name }}
                         </div>
-                        <div class="text-center mb-5">
+                        {{-- <div class="text-center mb-5">
                           {{ $category->text }}
-                        </div>
+                        </div> --}}
                       </a>
                     </div>
                   @endforeach
@@ -80,7 +86,7 @@
                 <div class="products text-center">
                   @foreach ($mostBuyableProducts as $product)
                     <div class="product">
-                      <a href="{{ route('shop.show', $product->slug) }}"><img src="{{ Voyager::image($product->image) }}" alt="product"></a>
+                      <a href="{{ route('shop.show', $product->slug) }}"><img src="{{ productImage($product->image) }}" alt="product"></a>
                       <a href="{{ route('shop.show', $product->slug) }}"><div class="product-name">{{ $product->name }}</div></a>
                       <div class="product-price">{{ $product->presentPrice() }}</div>
                     </div>
@@ -94,7 +100,7 @@
                 <div class="products text-center">
                   @foreach ($products as $product)
                     <div class="product">
-                      <a href="{{ route('shop.show', $product->slug) }}"><img src="{{ Voyager::image($product->image) }}" alt="product"></a>
+                      <a href="{{ route('shop.show', $product->slug) }}"><img src="{{ productImage($product->image) }}" alt="product"></a>
                       <a href="{{ route('shop.show', $product->slug) }}"><div class="product-name">{{ $product->name }}</div></a>
                       <div class="product-price">{{ $product->presentPrice() }}</div>
                     </div>

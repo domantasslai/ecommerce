@@ -16,7 +16,7 @@ class BlogController extends Controller
     {
         $pagination = 9;
         $posts = Post::where('status', 'PUBLISHED');
-        // dd($posts);
+
         if (request()->sort == 'newest') {
           $posts = $posts->orderBy('created_at')->paginate($pagination);
         }elseif (request()->sort == 'oldest') {
