@@ -36,9 +36,9 @@
             </div>
             <div class="hero container">
                 <div class="hero-copy">
-                    <h1>Use code: {{ $coupons }}</h1>
+                    <h1>Use code: {{ $coupons->code }}</h1>
                     <p>And get
-                    @if($coupon->type == 'fixed')
+                    @if($coupons->type == 'fixed')
                       {{ presentPrice($coupons->value, true) }}
                     @else
                       {{ $coupons->percent_off }} %

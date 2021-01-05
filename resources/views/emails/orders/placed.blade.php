@@ -20,7 +20,7 @@ Thank you for your order.
 
 **Order Tax ({{ $order->tax_rate }}%):** {{ round($order->tax / 100, 2) }} &euro;
 
-**Order Total:** {{ round($order->billing_total / 100, 2) }} &euro;
+**Order Total:** {{ round($order->total / 100, 2) }} &euro;
 
 **Items Ordered**
 
